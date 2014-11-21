@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.0.4 (8054) - http://www.bohemiancoding.com/sketch -->
+    <title>sballoon1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="sballoon1" sketch:type="MSArtboardGroup" stroke="#242424" fill="#F4F4F4">
+            <path d="M11.9968376,9 C7.58030617,9 4,12.5863782 4,17.0034204 L4,31.9965796 C4,36.4167466 7.58131222,40 12.0028471,40 C12.0028471,40 24.3176197,40 30.4778529,40 C32.2857368,40 42.9018902,53.8779335 44.709774,53.8779335 C46.7977885,53.8779335 40.0775335,40 42.165548,40 C44.1132782,40 47.9969586,40 47.9969586,40 C52.4169163,40 56,36.4136218 56,31.9965796 L56,17.0034204 C56,12.5832534 52.4258294,9 48.0031624,9 L11.9968376,9 Z" id="Rectangle-1" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

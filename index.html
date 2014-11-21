@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comic Strip Editor Applications - HCID M1 - University Paris Sud">
+    <meta name="author" content="Domonkos Horvath">
+    <meta name="keyword" content="Comic, Book, Strip, Editor, HCID, UPS">
+
+    <title>COMIC STRIP EDITOR</title>
+    
+    <!-- __________________________ CSS _________________________ -->
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/style-responsive.css" rel="stylesheet">
+    <link href="assets/css/jquery-ui.css" rel="stylesheet">
+
+      
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+  <section id="container" >
+      <!-- **********************************************************************************************************************************************************
+      TOP BAR CONTENT & NOTIFICATIONS
+      *********************************************************************************************************************************************************** -->
+      <!--header start-->
+      <header class="header black-bg">
+            <!--logo start 
+              <div class="sidebar-toggle-box">
+                  <div class="fa fa-book tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+              </div>
+            logo start-->
+            <a href="index.html" class="logo"><b>COMIC STRIP EDITOR</b></a>
+            <!--logo end-->
+            <div class="nav notify-row" id="top_menu">
+                <!--  Top menu start -->
+                <ul class="nav top-menu">
+                    <!-- History start -->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                            <i class="fa fa-history"></i>
+                            <span class="badge bg-theme">4</span>
+                        </a>
+                        <ul class="dropdown-menu extended tasks-bar">
+                            <div class="notify-arrow notify-arrow-green"></div>
+                            <li>
+                                <p class="green">History</p>
+                            </li>
+                            <!-- ACTION -->
+                            <li>
+                                <a href="#">
+                                    <div class="task-info">
+                                        <div class="desc">Action 1</div>
+                                    </div>
+                                    
+                                </a>
+                            </li>
+                            <!-- ACTION -->
+                            <li>
+                                <a href="#">
+                                    <div class="task-info">
+                                        <div class="desc">Action 2</div>
+                                    </div>
+                                    
+                                </a>
+                            </li>
+                            <!-- ACTION -->
+                            <li>
+                                <a href="#">
+                                    <div class="task-info">
+                                        <div class="desc">Action 3</div>
+                                    </div>
+                                    
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- History end -->
+                    <!-- UNDO Button start -->  
+                    <li class="dropdown">
+                    <a id="btnUndo" href="#">
+                            <i class="fa fa-undo"></i>
+                    </a>
+                    </li>
+                    <!-- Button end -->
+                    <!-- REDO Button start -->  
+                    <li>
+                    <a id="btnRedo" href="#" >
+                            <i class="fa fa-rotate-right"></i>
+                    </a>
+                    </li>
+                    <!-- Button end -->
+                    <!-- inbox dropdown end -->
+                </ul>
+            <!--  top menu end -->
+            </div>
+          
+            <!--  top menu RIGHT start -->
+          <div class="top-menu">
+            	<ul class="nav pull-right top-menu">
+                    
+                    
+                    <!-- Button start -->  
+                    <li>
+                    <a href="#" id="blueinking" style="margin: 15px 30px 0px 0px;" class="blueink" onclick="blueInking()">
+                            <i class="fa fa-magic" style="margin-right: 10px"></i> Blue ink mode
+                    </a>
+                    </li>
+                    <!-- Button end -->
+                    <!-- Button start -->  
+                    <li>
+                    <a href="#" id="lockLayout" style="margin: 15px 30px 0px 0px;" class="locklayout" onclick="">
+                            <i class="fa fa-lock" style="margin-right: 10px"></i> Lock layout 
+                    </a>
+                    </li>
+                    <!-- Button end -->
+                    <!-- Button start -->  
+                    <li>
+                    <a href="#" id="bringfront" style="margin-top: 15px; padding: 2px 9px;" onclick="layerManagement(this.id)">
+                            <i class="fa fa-step-forward fa-rotate-90"></i>
+                    </a>
+                    </li>
+                    <!-- Button end -->
+                    <!-- Button start -->  
+                    <li>
+                    <a href="#" id="sendback" style="margin-top: 15px; padding: 2px 9px;" onclick="layerManagement(this.id)">
+                            <i class="fa fa-step-forward fa-rotate-270"></i>
+                    </a>
+                    </li>
+                    <!-- Button end -->
+                    <!-- Button start -->  
+                    <li>
+                    <a href="#" id="forward" style="margin-top: 15px;" onclick="layerManagement(this.id)">
+                            <i class="fa fa-chevron-down"></i>
+                    </a>
+                    </li>
+                    <!-- Button end -->
+                    <!-- Button start -->  
+                    <li class="pushleft">
+                    <a href="#" id="backward" style="margin: 15px 30px 0px 0px;" onclick="layerManagement(this.id)">
+                            <i class="fa fa-chevron-up"></i>
+                    </a>
+                    </li>
+                    <!-- Button end -->
+                    <!-- DELETE Button start -->  
+                    <li class="margright">
+                    <a href="#" id="deleteselected" style="margin: 15px 30px 0px 0px;" onclick="removeSelected()">
+                            <i class="fa fa-trash"></i>
+                    </a>
+                    </li>
+                    <!-- DELETE Button end -->
+                    <!-- Button start -->  
+                    <li class="dropdown">
+                    <a href="#" style="margin-top: 15px;">
+                            <i class="fa fa-download"></i>
+                    </a>
+                    </li>
+                    <!-- Button end -->
+                    <!-- Button start -->  
+                    <li class="dropdown">
+                    <a href="#" style="margin-top: 15px;">
+                            <i class="fa fa-print"></i>
+                    </a>
+                    </li>
+                    <!-- Button end -->
+                    
+                    
+                    <li><a href="#" id="clear-canvas" class="clearcanvas" onclick="cleanCanvas()"><i class="fa fa-refresh" style="margin-right: 10px"></i>Clean canvas</a></li>
+            	</ul>
+                </div>
+                <!--  top menu RIGHT end -->
+        </header>
+      <!--header end-->
+      
+      <!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+      <!--sidebar start-->
+      <aside>
+          <div id="sidebar">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+
+
+                  <li>
+                      <a id="layout" class="switcher">
+                          <i class="fa fa-th"></i><br>
+                          <span>Layout</span>
+                      </a>
+                  </li>
+                  
+                  <li>
+                      <a id="backgrounds" class="switcher" >
+                          <i class="fa fa-photo"></i><br>
+                          <span>Backgrounds</span>
+                      </a>
+                  </li>
+                  
+                  <li>
+                      <a id="characters" class="switcher" >
+                          <i class="fa fa-users"></i><br>
+                          <span>Characters</span>
+                      </a>
+                  </li>
+                  
+                  <li>
+                      <a id="objects" class="switcher">
+                          <i class="fa fa-cube"></i><br>
+                          <span>Objects</span>
+                      </a>
+                  </li>
+                  
+                  <li>
+                      <a id="text" class="switcher" >
+                          <i class="fa fa-comments-o"></i><br>
+                          <span>Text</span>
+                      </a>
+                  </li>
+                  
+                  <li>
+                      <a id="draw" class="switcher" >
+                          <i class="fa fa-pencil"></i><br>
+                          <span>Draw</span>
+                      </a>
+                  </li>
+                  
+                  <li>
+                      <a id="uploads" class="switcher" >
+                          <i class="fa fa-cloud-upload"></i><br>
+                          <span>Uploads</span>
+                      </a>
+                  </li>
+                  
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside>
+      <!--sidebar end-->
+      
+      <!-- **********************************************************************************************************************************************************
+      LIBRARY
+      *********************************************************************************************************************************************************** -->
+      
+      <aside>
+<!-- COMIC LIBRARIES -->
+          <div class="comiclibrary">
+             
+
+<!-- CONTENT GOES HERE -->
+              <div id="switcher-panel"></div>
+              
+<!-- CONTENT OFF THE LIBRARIES -->
+
+              
+<!-- LAYOUT CONTENT -->
+              <div id="layout-content" class="switcher-content shownow">
+                  <h3>LAYOUT</h3>
+                  
+              <button id="singlePanel" onclick="addPanel(30,30,100,100)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/spanel.svg" alt="map" height="60" width="60"><br />
+                  Single panel
+              </button>
+              <br />      
+              <h5>Layouts</h5>
+              <button id="l333" onclick="createLayout()" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/l333.svg" alt="map" height="60" width="60"><br />
+                  Layout 3:3:3
+              </button>  
+                  
+                  
+              </div>
+              
+<!-- BACKGROUNDS CONTENT -->
+              <div id="backgrounds-content" class="switcher-content">
+                  <h3>BACKGROUNDS</h3>
+                  <button id="background1" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/background1.svg" alt="map" height="60" width="60"><br />Background
+                  </button>
+                  <button id="paris" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/paris0.svg" alt="map" height="60" width="60"><br />Paris
+                  </button>
+                  <button id="taipei" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/taipei0.svg" alt="map" height="60" width="60"><br />Taipei
+                  </button>
+                  
+              </div>
+              
+<!-- CHARACTERS CONTENT -->
+              <div id="characters-content" class="switcher-content">
+                  <h3>CHARACTERS</h3>
+                  
+                  <button id="character1" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/character1.svg" alt="map" height="60" width="60"><br />Character
+                  </button>
+                  <button id="character2" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/character2.svg" alt="map" height="60" width="60"><br />Character
+                  </button>
+                  <button id="character3" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/character3.svg" alt="map" height="60" width="60"><br />Character
+                  </button>
+                  <button id="character4" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/character4.svg" alt="map" height="60" width="60"><br />Character
+                  </button>
+                  
+              </div>
+              
+<!-- OBJECTS CONTENT -->
+              <div id="objects-content" class="switcher-content">
+                  <h3>OBJECTS</h3>
+                  <button id="rectangle" onclick="addFobject(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/rectangle.svg" alt="map" height="60" width="60"><br />Rectangle
+                  </button>
+                  <button id="circle" onclick="addFobject(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/circle.svg" alt="map" height="60" width="60"><br />Circle
+                  </button>
+                  <button id="triangle" onclick="addFobject(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/triangle.svg" alt="map" height="60" width="60"><br />Triangle
+                  </button>
+                  <button id="object1" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/object1.svg" alt="map" height="60" width="60"><br />Fighter
+                  </button>
+                  <button id="object2" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/object2.svg" alt="map" height="60" width="60"><br />Hummer
+                  </button>
+                  <button id="object3" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/object3.svg" alt="map" height="60" width="60"><br />Bicycle
+                  </button>
+                  <button id="object4" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/object4.svg" alt="map" height="60" width="60"><br />Car
+                  </button>
+                  <button id="eiffeltower" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/eiffeltower.svg" alt="map" height="60" width="60"><br />Eiffel tower
+                  </button>
+                  <button id="liberty" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/liberty.svg" alt="map" height="60" width="60"><br />Statue of liberty
+                  </button>
+                  <button id="bridge" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/bridge.svg" alt="map" height="60" width="60"><br />Bridge
+                  </button>
+                  <button id="piramids" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/piramids.svg" alt="map" height="60" width="60"><br />Piramids
+                  </button>
+                  <button id="tajmahal" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/piramids.svg" alt="map" height="60" width="60"><br />Character
+                  </button>
+              </div>
+              
+<!-- TEXT CONTENT -->
+              <div id="text-content" class="switcher-content">
+                  <h3>TEXT</h3>
+                  
+                  <button id="sballoon1" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/sballoon1.svg" alt="map" height="60" width="60"><br />Speech balloon
+                  </button>
+                  <button id="sballoon2" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/sballoon2.svg" alt="map" height="60" width="60"><br />Speech balloon
+                  </button>
+                  <button id="sballoon3" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/sballoon3.svg" alt="map" height="60" width="60"><br />Speech balloon
+                  </button>
+                  <button id="sballoon5" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/sballoon5.svg" alt="map" height="60" width="60"><br />Speech balloon
+                  </button>
+                  
+              </div>
+              
+<!-- DRAW CONTENT -->
+              <div id="draw-content" class="switcher-content">
+                  <h3>DRAW</h3>
+                  <div style="text-align: center">
+                  <a id="proba" class="btn btn-default" onclick="proba()">Enter drawing mode</a>
+
+
+                  </div>
+              </div>
+              
+<!-- UPLOADS CONTENT -->
+              <div id="uploads-content" class="switcher-content">
+                  <h3>UPLOADS</h3>
+                  <h5>Feature is coming </h5>
+              </div>
+          </div>
+      </aside>
+      
+      <div style="float: right">
+         <div class="inspector">
+          <h5 style="text-align: center">Inspector</h5>
+          
+<!-- DRAWING CONTENT -->
+             
+          
+         </div>
+      </div>
+      
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+      <!--main content start-->
+      <section id="main-content">
+          <section class="wrapper site-min-height">
+          	<div class="row mt">
+          		<div class="col-lg-12">
+                    <!--CANVAS GOES HERE-->
+                    <div id="canvasgoeshere">
+                        
+                    </div>    
+                </div>
+          	</div>
+		</section> <!--/wrapper -->
+         
+      </section><!-- /MAIN CONTENT -->
+
+      
+      
+      <!--main content end-->
+      <!--footer start-->
+      <footer class="site-footer">
+          <div class="text-center">
+              2014 - Domonkos Horvath
+              <a href="#" class="go-top">
+                  <i class="fa fa-angle-up"></i>
+              </a>
+          </div>
+      </footer>
+      <!--footer end-->
+    </section> <!--container section end-->
+      
+    <!-- JQUERY and Content panel switcher -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/jquery.content-panel-switcher.js"></script>  
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    
+    
+    <!-- FABRIC JS -->
+    <script src="assets/js/fabric.min.js"></script>
+    <script src="assets/js/utils.js"></script>   
+      
+    <!--common script for all pages-->
+    <script src="assets/js/common-scripts.js"></script>
+      
+    <!--comic book scripts -->
+    <script src="assets/js/comicscript.js"></script> 
+
+      
+    <!--script for page-->
+  <script>
+      // LIBRARY SWITCH script
+      $(document).ready(function() {
+      jcps.fader(300, '#switcher-panel');
+      });
+  </script>
+
+  </body>
+</html>
