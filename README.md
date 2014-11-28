@@ -1,5 +1,5 @@
 #Comicstrip Editor
-
+Simple comic book sketching application built in JS.
 
 
 
@@ -38,17 +38,18 @@
 ##Todo features
 - Undo
 - Redo
-- Add inspector properties when selecting an objects
+- Add inspector properties when selecting an objects **(+)**
 - Prevent resizing and rotating of multiple objects
+- **Drawing (?)**
 
 ######Layout
-- Add more premade layout
+- Add more premade layout **(+)**
 - Lock layout
 
 ######Objects
 - Change color
 - Drag and drop to add
-- Guidelines when moving
+- Guidelines when moving **(+)**
 - Make bigger handlers
 
 ######Upload
