@@ -13,7 +13,12 @@ document.getElementById("canvasgoeshere").appendChild(canvas_1);    // Add canva
 
 canvas = new fabric.Canvas(canvas_1.id);    // Set up Fabric canvas from the canvas tag
 canvas.backgroundColor = '#fff';            // CUSTOM BACKGROUND
-canvas.selection = false;                   // DISABLE GROUP SELECTION
+canvas.selection = true;                    // DISABLE GROUP SELECTION
+canvas.selectionColor = 'rgba(155, 154, 154, 0.3)';
+canvas.selectionBorderColor = 'rgba(62, 62, 62, 0.3)';
+canvas.selectionLineWidth = 1;
+
+
 canvas.isDrawingMode = false;
 canvas.setHeight(cHeight);                  // Set Height
 canvas.setWidth(cWidth);                    // Set Width
