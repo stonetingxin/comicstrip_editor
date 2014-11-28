@@ -13,13 +13,13 @@ document.getElementById("canvasgoeshere").appendChild(canvas_1);    // Add canva
 
 canvas = new fabric.Canvas(canvas_1.id);    // Set up Fabric canvas from the canvas tag
 canvas.backgroundColor = '#fff';            // CUSTOM BACKGROUND
+
 canvas.selection = true;                    // DISABLE GROUP SELECTION
 canvas.selectionColor = 'rgba(155, 154, 154, 0.3)';
 canvas.selectionBorderColor = 'rgba(62, 62, 62, 0.3)';
 canvas.selectionLineWidth = 1;
 
-
-canvas.isDrawingMode = false;
+canvas.isDrawingMode = false;               // Drawing off
 canvas.setHeight(cHeight);                  // Set Height
 canvas.setWidth(cWidth);                    // Set Width
     
@@ -65,7 +65,7 @@ var panel = new fabric.Rect({
 
 //ADD PANEL FUNCTION
 function addPanel(x, y, w, h) {
-    var panel = new fabric.Rect({
+    var panelObject = new fabric.Rect({
     left: x,
     top: y, 
     fill: 'transparent',    
@@ -77,9 +77,11 @@ function addPanel(x, y, w, h) {
     perPixelTargetFind: true
     });
     
-    canvas.add(panel);
+    canvas.add(panelObject);
     
-    panel.on({'scaling': function(e) {
+    // Panellist.addPanel
+    
+    panelObject.on({'scaling': function(e) {
         var obj = this,
             w = obj.width * obj.scaleX,
             h = obj.height * obj.scaleY,
