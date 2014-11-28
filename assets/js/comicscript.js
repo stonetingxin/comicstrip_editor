@@ -4,6 +4,9 @@
 var cWidth = 598;
 var cHeight = 843;
 
+var blueInkColor = '#00FFFF';
+
+
 // CREATE THE FABRIC CANVAS
 var canvas_1;
 
@@ -14,7 +17,7 @@ document.getElementById("canvasgoeshere").appendChild(canvas_1);    // Add canva
 canvas = new fabric.Canvas(canvas_1.id);    // Set up Fabric canvas from the canvas tag
 canvas.backgroundColor = '#fff';            // CUSTOM BACKGROUND
 
-canvas.selection = true;                    // DISABLE GROUP SELECTION
+canvas.selection = true;                    // GROUP SELECTION TRUE
 canvas.selectionColor = 'rgba(155, 154, 154, 0.3)';
 canvas.selectionBorderColor = 'rgba(62, 62, 62, 0.3)';
 canvas.selectionLineWidth = 1;
@@ -23,12 +26,13 @@ canvas.isDrawingMode = false;               // Drawing off
 canvas.setHeight(cHeight);                  // Set Height
 canvas.setWidth(cWidth);                    // Set Width
     
-
+initAligningGuidelines(canvas);             // Initialitzing Align guidelines
 
 // CUSTOMIZATIONS FOR ALL OBJECT
-fabric.Object.prototype.cornerSize = 6;
-fabric.Object.prototype.borderColor = '#25abff';
-fabric.Object.prototype.cornerColor = '#25abff';
+fabric.Group.prototype.hasControls = false  // Group controls disabled
+fabric.Object.prototype.cornerSize = 9;
+fabric.Object.prototype.borderColor = '#25c4ff';
+fabric.Object.prototype.cornerColor = '#25c4ff';
 fabric.Object.prototype.transparentCorners = false;
 fabric.Object.prototype.borderOpacityWhenMoving = 0.8;
 
@@ -252,14 +256,12 @@ function layerManagement(clicked_id){
 
 // BLUE INKING
 
-var colorSet = '#00FFFF';
-
 function blueInking(){
     var temp = canvas.getActiveObject();
     var typeo = canvas.getActiveObject().get('type');
 
-    console.log('pressed blueink' + typeo);
-    temp.setFill(colorSet);
+    console.log('added blueink for: ' + typeo);
+    temp.setFill(blueInkColor);
     canvas.renderAll();
 }
 
