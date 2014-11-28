@@ -45,7 +45,7 @@ Simple comic book sketching application built in JS.
 - Lock layout
 
 ######Objects
-- Change color
+- Change color to blue ink
 - Drag and drop to add
 - Guidelines when moving **(+)**
 - Make bigger handlers
