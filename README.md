@@ -38,8 +38,6 @@ Simple comic book sketching application built in JS.
 ##Todo features
 - Undo
 - Redo
-- Add inspector properties when selecting an objects **(+)**
-- Prevent resizing and rotating of multiple objects
 - **Drawing (?)**
 
 ######Layout
@@ -51,6 +49,7 @@ Simple comic book sketching application built in JS.
 - Drag and drop to add
 - Guidelines when moving **(+)**
 - Make bigger handlers
+- Prevent resizing and rotating of multiple objects
 
 ######Upload
 - Implement upload feature
