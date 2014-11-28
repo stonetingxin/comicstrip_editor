@@ -38,6 +38,7 @@ Simple comic book sketching application built in JS.
 ##Todo features
 - Undo
 - Redo
+- Add multiple pages
 - **Drawing (?)**
 
 ######Layout
