@@ -1,23 +1,28 @@
-// JavaScript Document
-// Comic Book JS scripts - Domonkos Horvath
+/*  
+ *  JavaScript Document:
+ *  Comic Book JS scripts 
+ *  
+ *  Author: Domonkos Horvath
+*/
 
+// canvas dimensions
 var cWidth = 598;
 var cHeight = 843;
-
 var blueInkColor = '#00FFFF';       // BLUE INK color
 var customSVGColor = '#747474';     // Loaded SVG shapes color
 
-// CREATE THE FABRIC CANVAS
+// canvas object
 var canvas_1;
 
-canvas_1 = document.createElement("canvas"); // CREATE CANVAS TAG
-canvas_1.id = "c";                           // SET CANVAS ID
+canvas_1 = document.createElement("canvas");                        // CREATE CANVAS TAG
+canvas_1.id = "c";                                                  // SET CANVAS ID
 document.getElementById("canvasgoeshere").appendChild(canvas_1);    // Add canvas to container in HTML
 
 canvas = new fabric.Canvas(canvas_1.id);    // Set up Fabric canvas from the canvas tag
 canvas.backgroundColor = '#fff';            // CUSTOM BACKGROUND
 
-canvas.selection = true;                    // GROUP SELECTION TRUE
+//Enable group selection
+canvas.selection = true;                    
 canvas.selectionColor = 'rgba(155, 154, 154, 0.3)';
 canvas.selectionBorderColor = 'rgba(62, 62, 62, 0.3)';
 canvas.selectionLineWidth = 1;
@@ -28,7 +33,7 @@ canvas.setWidth(cWidth);                    // Set Width
     
 initAligningGuidelines(canvas);             // Initialitzing Align guidelines
 
-// CUSTOMIZATIONS FOR ALL OBJECT
+// customization for all objects
 fabric.Group.prototype.hasControls = false  // Group controls disabled
 fabric.Object.prototype.cornerSize = 9;
 fabric.Object.prototype.borderColor = '#25c4ff';
@@ -37,7 +42,7 @@ fabric.Object.prototype.transparentCorners = false;
 fabric.Object.prototype.borderOpacityWhenMoving = 0.8;
 
 
-// BLEED AREA
+// BLEED AREA (what is this?)
 var bleed = new fabric.Rect({
   left: 9,
   top: 9, 
@@ -51,10 +56,11 @@ var bleed = new fabric.Rect({
 });
 canvas.add(bleed);
 
+// -----------------------------------------------------------------------------
+// ------------------------- STARTING EXAMPLE FUNCTIONS ------------------------
+// -----------------------------------------------------------------------------
 
-// ------------------------- FABRIC OBJECTS ------------------------
-
-//SINGLE PANEL
+//  single panel
 var panel = new fabric.Rect({
     left: 100,
     top: 100, 
@@ -67,13 +73,7 @@ var panel = new fabric.Rect({
     perPixelTargetFind: true
 });
 
-// Rectangle, Circle, Triangle
-
-var rect2 = new fabric.Rect({ top: 100, left: 100, width: 50, height: 50, fill: '#212121' });   
-var circ = new fabric.Circle({ top: 140, left: 200, radius: 75, fill: '#212121' });
-var triang = new fabric.Triangle({ top: 200, left: 300, width: 100, height: 100, fill: '#212121' });
-
-// TEST RECTANGLE
+// rectangle
 var rect = new fabric.Rect({
   left: 230,
   top: 240, 
@@ -82,13 +82,19 @@ var rect = new fabric.Rect({
   height: 50,  
 });
 
-// TEST OBJECTS ON CANVAS
+/* Rectangle, Circle, Triangle (unused)
+var rect2 = new fabric.Rect({ top: 100, left: 100, width: 50, height: 50, fill: '#212121' });   
+var circ = new fabric.Circle({ top: 140, left: 200, radius: 75, fill: '#212121' });
+var triang = new fabric.Triangle({ top: 200, left: 300, width: 100, height: 100, fill: '#212121' });
+*/
+
+// put test object and panel on canvas
 canvas.add(rect);
 canvas.add(panel);
 
-// ------------------------- FUNCTIONS ------------------------
-
-
+// -----------------------------------------------------------------------------
+// ------------------------- OBJECTS CREATION ----------------------------------
+// -----------------------------------------------------------------------------
 //ADD PANEL FUNCTION
 function addPanel(x, y, w, h) {
     var panelObject = new fabric.Rect({
@@ -125,19 +131,27 @@ function addPanel(x, y, w, h) {
 
 
 // ADD LAYOUT (x (left) - y (top) - w - h)
-function createLayout(clicked_id) {
+function createLayout(preset) {
     console.log('pressed layout');
-            addPanel(18, 18, 180, 263);
-            addPanel(207, 18, 180, 263);
-            addPanel(397, 18, 180, 263);
-            
-            addPanel(18, 290, 180, 263);
-            addPanel(207, 290, 180, 263);
-            addPanel(397, 290, 180, 263);
-            
-            addPanel(18, 562, 180, 263);
-            addPanel(207, 562, 180, 263);
-            addPanel(397, 562, 180, 263);
+    if (preset == 1) {                  // 3x3 template
+        addPanel(18, 18, 180, 263);
+        addPanel(207, 18, 180, 263);
+        addPanel(397, 18, 180, 263);
+        
+        addPanel(18, 290, 180, 263);
+        addPanel(207, 290, 180, 263);
+        addPanel(397, 290, 180, 263);
+        
+        addPanel(18, 562, 180, 263);
+        addPanel(207, 562, 180, 263);
+        addPanel(397, 562, 180, 263);
+    }
+    /* Add more presets: 
+        e.g:
+        else if(preset==2) then 
+            addPanels()
+            ...
+    */
 };
 
 // ADD SVG SHAPE (WORKING)
@@ -175,7 +189,6 @@ function addShape(shapeName) {
 };
 
 // ADD FABRIC OBJECT
-
 function addFobject(clicked_id) {
     switch(clicked_id) {
     case "circle":
@@ -191,7 +204,9 @@ function addFobject(clicked_id) {
     }
 };
 
-// -------------------------   MANIPULATION   ------------------------
+// -----------------------------------------------------------------------------
+// -------------------------   OBJECTS MANIPULATION   --------------------------
+// -----------------------------------------------------------------------------
 
 // SELECT ALL OBJECTS ON THE CANVAS
 function selectAllObjects(){
@@ -244,7 +259,6 @@ function layerManagement(clicked_id){
 };
 
 // BLUE INKING
-
 function blueInking(){
     var temp = canvas.getActiveObject();
     var typeo = canvas.getActiveObject().get('type');
@@ -254,8 +268,9 @@ function blueInking(){
     canvas.renderAll();
 }
 
-
-// ------------------------- DRAWING MODE ------------------------ 
+// -----------------------------------------------------------------------------
+// ------------------------- DRAWING MODE --------------------------------------
+// -----------------------------------------------------------------------------
 
 //('#testbutton').click(proba);
 
@@ -273,8 +288,10 @@ function proba(){
     } 
 };
 
+// -----------------------------------------------------------------------------
+// --------------------------- EVENTS ------------------------------------------
+// -----------------------------------------------------------------------------
 
-// --------------------------- EVENTS -----------------------------
 // PANEL SCALING KEEPS STROKEWIDTH THE SAME
 panel.on({'scaling': function(e) {
         var obj = this,
