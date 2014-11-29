@@ -4,8 +4,8 @@
 var cWidth = 598;
 var cHeight = 843;
 
-var blueInkColor = '#00FFFF';
-
+var blueInkColor = '#00FFFF';       // BLUE INK color
+var customSVGColor = '#747474';     // Loaded SVG shapes color
 
 // CREATE THE FABRIC CANVAS
 var canvas_1;
@@ -38,7 +38,7 @@ fabric.Object.prototype.borderOpacityWhenMoving = 0.8;
 
 
 // BLEED AREA
-var bleeding = new fabric.Rect({
+var bleed = new fabric.Rect({
   left: 9,
   top: 9, 
   fill: 'transparent',    
@@ -49,10 +49,10 @@ var bleeding = new fabric.Rect({
   perPixelTargetFind: true,
   selectable: false
 });
-canvas.add(bleeding);
+canvas.add(bleed);
 
 
-// ------------------------- OBJECTS ------------------------
+// ------------------------- FABRIC OBJECTS ------------------------
 
 //SINGLE PANEL
 var panel = new fabric.Rect({
@@ -66,6 +66,28 @@ var panel = new fabric.Rect({
     hasRotatingPoint: false,
     perPixelTargetFind: true
 });
+
+// Rectangle, Circle, Triangle
+
+var rect2 = new fabric.Rect({ top: 100, left: 100, width: 50, height: 50, fill: '#212121' });   
+var circ = new fabric.Circle({ top: 140, left: 200, radius: 75, fill: '#212121' });
+var triang = new fabric.Triangle({ top: 200, left: 300, width: 100, height: 100, fill: '#212121' });
+
+// TEST RECTANGLE
+var rect = new fabric.Rect({
+  left: 230,
+  top: 240, 
+  fill: '#e03939',    
+  width: 50,
+  height: 50,  
+});
+
+// TEST OBJECTS ON CANVAS
+canvas.add(rect);
+canvas.add(panel);
+
+// ------------------------- FUNCTIONS ------------------------
+
 
 //ADD PANEL FUNCTION
 function addPanel(x, y, w, h) {
@@ -96,35 +118,15 @@ function addPanel(x, y, w, h) {
             'width'      : w,
             'scaleX'     : 1,
             'scaleY'     : 1
-        });
-    }
-});
-}
+            });
+        }
+    });
+};
 
-// TEST RECTANGLE
-var rect = new fabric.Rect({
-  left: 100,
-  top: 100, 
-  fill: '#e03939',    
-  width: 50,
-  height: 50,  
-});
-
-var rect2 = new fabric.Rect({ top: 100, left: 100, width: 50, height: 50, fill: '#212121' });   
-var circ = new fabric.Circle({ top: 140, left: 200, radius: 75, fill: '#212121' });
-var triang = new fabric.Triangle({ top: 200, left: 300, width: 100, height: 100, fill: '#212121' });
-
-
-// ------------------------- ADD OBJECTS TO THE CANVAS ------------------------
-
-// TEST OBJECTS
-canvas.add(rect);
-canvas.add(panel);
 
 // ADD LAYOUT (x (left) - y (top) - w - h)
 function createLayout(clicked_id) {
     console.log('pressed layout');
-    
             addPanel(18, 18, 180, 263);
             addPanel(207, 18, 180, 263);
             addPanel(397, 18, 180, 263);
@@ -136,55 +138,43 @@ function createLayout(clicked_id) {
             addPanel(18, 562, 180, 263);
             addPanel(207, 562, 180, 263);
             addPanel(397, 562, 180, 263);
-    /*
-    switch(clicked_id) {
-    case "l333":
-            addPanel(18, 18, 181, 263);
-            addPanel(208, 18, 181, 263);
-            addPanel(398, 18, 181, 263);
-            
-            addPanel(18, 290, 181, 263);
-            addPanel(208, 290, 181, 263);
-            addPanel(398, 290, 181, 263);
-            
-            addPanel(18, 562, 181, 263);
-            addPanel(208, 562, 181, 263);
-            addPanel(398, 562, 181, 263);
-            break;
-    case "l222":
-            
-            break; 
-    case "l022":
+};
 
-            break;
-    case "l212":
-
-            break;
-    default:
-    }
-    */
-}
-
-// SVG FROM LOCAL FILE
+// ADD SVG SHAPE (WORKING)
 function addShape(shapeName) {
-    console.log('adding shape', shapeName);
-    var coord = getRandomLeftTop();
     
-    fabric.Image.fromURL('./assets/svg/' + shapeName + '.svg', function(oImg) {
-        
-      oImg.set({
+    var colorSet = customSVGColor;          // CHANGE COLOR OF SVG 
+    var coord = getRandomLeftTop();
+    var url = "./assets/svg/" + shapeName + ".svg";
+    
+    // LOAD SVG FROM URL
+    fabric.loadSVGFromURL(url, function(objects, options) {
+
+      var loadedObject = fabric.util.groupSVGElements(objects, options);
+
+      loadedObject.set({
         left: coord.left,
         top: coord.top,
-        fill: '#25abff',   
-      })    
+        perPixelTargetFind: true  
+      })
+      .setCoords();
         
-      canvas.add(oImg);
+        if (loadedObject.isSameColor && loadedObject.isSameColor() || !loadedObject.paths) {
+        loadedObject.setFill(colorSet);
+        }
+        else if (loadedObject.paths) {
+            for (var i = 0; i < loadedObject.paths.length; i++) {
+            loadedObject.paths[i].setFill(colorSet);
+            } 
+        }
+        
+      console.log('adding shape: ' + shapeName + ', paths lenght: ' + loadedObject.paths.length);    
+      canvas.add(loadedObject);
+      canvas.renderAll();    
     });
-  };
+};
 
-
-
-// FABRIC OBJECT
+// ADD FABRIC OBJECT
 
 function addFobject(clicked_id) {
     switch(clicked_id) {
@@ -199,7 +189,7 @@ function addFobject(clicked_id) {
             break;
     default:
     }
-}
+};
 
 // -------------------------   MANIPULATION   ------------------------
 
@@ -228,7 +218,7 @@ function removeSelected() {
 
 function cleanCanvas() {
     canvas.clear()
-    canvas.add(bleeding);
+    canvas.add(bleed);
   };
 
 // LAYER MANAGEMENT
@@ -250,7 +240,6 @@ function layerManagement(clicked_id){
             canvas.bringToFront(activeObject);
             break;
     default:
-
     }
 };
 
@@ -266,33 +255,7 @@ function blueInking(){
 }
 
 
-
-
-// BLUE INK SVG (NOT FINISHED)
-function svgblueink() {
-    var typeo = canvas.getActiveObject().get('type');
-  fabric.loadSVGFromURL('../scripts/svg/' + typeo + '.svg', function(objects, options) {
-    var shape = fabric.util.groupSVGElements(objects, options);
-    shape.set({
-      left: 165,
-      top: 100,
-      width: 295,
-      height: 40
-    });
-    if (shape.isSameColor && shape.isSameColor() || !shape.paths) {
-      shape.setFill(colorSet);
-    }
-    else if (shape.paths) {
-      for (var i = 0; i < shape.paths.length; i++) {
-        shape.paths[i].setFill(colorSet);
-      }
-    }
-    canvas.add(shape);
-    canvas.renderAll();
-  }); 
-};
-
-// FABRIC DRAWING 
+// ------------------------- DRAWING MODE ------------------------ 
 
 //('#testbutton').click(proba);
 
@@ -311,8 +274,7 @@ function proba(){
 };
 
 
-// ------------------------- EVENTS ------------------------
-
+// --------------------------- EVENTS -----------------------------
 // PANEL SCALING KEEPS STROKEWIDTH THE SAME
 panel.on({'scaling': function(e) {
         var obj = this,
