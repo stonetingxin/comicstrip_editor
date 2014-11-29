@@ -278,6 +278,8 @@ function lockLayout() {
         }
         lockedLayout = true;
         $('#lockMessage').html('Unlock');
+        $('#lockIcon').removeClass('fa-lock');
+        $('#lockIcon').addClass('fa-unlock');
     }
     else {                  // unlock it
         for (var i=0; i<canvas.getObjects().length; i++) {
@@ -287,6 +289,8 @@ function lockLayout() {
         }
         lockedLayout = false;
         $('#lockMessage').html('Lock');
+        $('#lockIcon').removeClass('fa-unlock');
+        $('#lockIcon').addClass('fa-lock');
     }
 }
 
