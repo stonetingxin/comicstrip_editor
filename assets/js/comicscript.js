@@ -41,7 +41,6 @@ fabric.Object.prototype.cornerColor = '#25c4ff';
 fabric.Object.prototype.transparentCorners = false;
 fabric.Object.prototype.borderOpacityWhenMoving = 0.8;
 
-
 // BLEED AREA (what is this?)
 var bleed = new fabric.Rect({
   left: 9,
@@ -55,6 +54,8 @@ var bleed = new fabric.Rect({
   selectable: false
 });
 canvas.add(bleed);
+
+var lockedLayout = false;
 
 // -----------------------------------------------------------------------------
 // ------------------------- STARTING EXAMPLE FUNCTIONS ------------------------
@@ -70,7 +71,8 @@ var panel = new fabric.Rect({
     stroke: '#0f0f0f',
     strokeWidth: 6,  
     hasRotatingPoint: false,
-    perPixelTargetFind: true
+    perPixelTargetFind: true,
+    type: "panel"
 });
 
 // rectangle
@@ -98,20 +100,19 @@ canvas.add(panel);
 //ADD PANEL FUNCTION
 function addPanel(x, y, w, h) {
     var panelObject = new fabric.Rect({
-    left: x,
-    top: y, 
-    fill: 'transparent',    
-    width: w,
-    height: h,
-    stroke: '#0f0f0f',
-    strokeWidth: 6,  
-    hasRotatingPoint: false,
-    perPixelTargetFind: true
+        left: x,
+        top: y, 
+        fill: 'transparent',    
+        width: w,
+        height: h,
+        stroke: '#0f0f0f',
+        strokeWidth: 6,  
+        hasRotatingPoint: false,
+        perPixelTargetFind: true,
+        type: "panel"
     });
     
     canvas.add(panelObject);
-    
-    // Panellist.addPanel
     
     panelObject.on({'scaling': function(e) {
         var obj = this,
@@ -240,7 +241,6 @@ function cleanCanvas() {
 function layerManagement(clicked_id){
     
     var activeObject = canvas.getActiveObject();
-    
     switch(clicked_id) {
     case "backward":
             canvas.sendBackwards(activeObject);
@@ -268,12 +268,35 @@ function blueInking(){
     canvas.renderAll();
 }
 
+// LOCK LAYOUT
+function lockLayout() {
+    if (!lockedLayout) {    // lock it        
+        for (var i=0; i<canvas.getObjects().length; i++) {
+            if (canvas.item(i).type == 'panel') {
+                canvas.item(i).selectable = false;
+            }
+        }
+        lockedLayout = true;
+        $('#lockMessage').html('Unlock');
+    }
+    else {                  // unlock it
+        for (var i=0; i<canvas.getObjects().length; i++) {
+            if (canvas.item(i).type == 'panel') {
+                canvas.item(i).selectable = true;
+            }
+        }
+        lockedLayout = false;
+        $('#lockMessage').html('Lock');
+    }
+}
+
 // -----------------------------------------------------------------------------
 // ------------------------- DRAWING MODE --------------------------------------
 // -----------------------------------------------------------------------------
 
 //('#testbutton').click(proba);
 
+// what is proba?
 function proba(){
     canvas.isDrawingMode = !canvas.isDrawingMode;
     if (canvas.isDrawingMode) {
