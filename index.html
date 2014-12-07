@@ -113,7 +113,7 @@
                     <!-- Button start -->  
                     <li>
                     <a href="#" id="blueinking" style="margin: 15px 30px 0px 0px;" class="blueink" onclick="blueInking()">
-                            <i class="fa fa-magic" style="margin-right: 10px"></i> Blue ink mode
+                            <i class="fa fa-magic" style="margin-right: 10px"></i> Blue inking
                     </a>
                     </li>
                     <!-- Button end -->
@@ -272,14 +272,37 @@
                   <img src="assets/svg/spanel.svg" alt="map" height="60" width="60"><br />
                   Single panel
               </button>
+              <br />  
               <br />      
-              <h5>Layouts</h5>
+              <h5>Premade layouts</h5>
               <button id="l333" onclick="createLayout(1)" class="btn btn-default comicbutton" href="">
                   <img src="assets/svg/l333.svg" alt="map" height="60" width="60"><br />
                   Layout 3:3:3
-              </button>  
-                  
-                  
+              </button> 
+              <button id="l323" onclick="createLayout(2)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/l323.svg" alt="map" height="60" width="60"><br />
+                  Layout 3:2:3
+              </button>       
+              <button id="213" onclick="createLayout(3)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/l213.svg" alt="map" height="60" width="60"><br />
+                  Layout 2:1:3
+              </button>   
+              <button id="212" onclick="createLayout(4)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/l212.svg" alt="map" height="60" width="60"><br />
+                  Layout 2:1:2
+              </button>
+              <button id="l012" onclick="createLayout(5)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/l012.svg" alt="map" height="60" width="60"><br />
+                  Layout 0:1:2
+              </button>        
+              <button id="l22" onclick="createLayout(6)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/l22.svg" alt="map" height="60" width="60"><br />
+                  Layout 2:2
+              </button>
+              <button id="l11" onclick="createLayout(7)" class="btn btn-default comicbutton" href="">
+                  <img src="assets/svg/l11.svg" alt="map" height="60" width="60"><br />
+                  Layout 1:1
+              </button>      
               </div>
               
 <!-- BACKGROUNDS CONTENT -->
@@ -380,7 +403,7 @@
               <div id="draw-content" class="switcher-content">
                   <h3>DRAW</h3>
                   <div style="text-align: center">
-                  <a id="proba" class="btn btn-default" onclick="proba()">Enter drawing mode</a>
+                  <a id="proba" class="btn btn-default" onclick="drawingMode()">Enter drawing mode</a>
 
 
                   </div>
@@ -394,15 +417,6 @@
           </div>
       </aside>
       
-      <div style="float: right">
-         <div class="inspector">
-          <h5 style="text-align: center">Inspector</h5>
-          
-<!-- DRAWING CONTENT -->
-             
-          
-         </div>
-      </div>
       
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT

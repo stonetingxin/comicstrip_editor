@@ -9,7 +9,7 @@
 var cWidth = 700;
 var cHeight = 843;
 var blueInkColor = '#00FFFF';       // BLUE INK color
-var customSVGColor = '#747474';     // Loaded SVG shapes color
+var customSVGColor = '#0b0b0b';     // Loaded SVG shapes color
 
 // canvas object
 var canvas_1;
@@ -84,12 +84,6 @@ var rect = new fabric.Rect({
   height: 50,  
 });
 
-// Rectangle, Circle, Triangle (used in addFobject() function)
-var rect2 = new fabric.Rect({ top: 100, left: 100, width: 50, height: 50, fill: '#212121' });   
-var circ = new fabric.Circle({ top: 140, left: 200, radius: 75, fill: '#212121' });
-var triang = new fabric.Triangle({ top: 200, left: 300, width: 100, height: 100, fill: '#212121' });
-
-
 // put test object and panel on canvas
 canvas.add(rect);
 canvas.add(panel);
@@ -109,10 +103,11 @@ function addPanel(x, y, w, h) {
         strokeWidth: 6,  
         hasRotatingPoint: false,
         perPixelTargetFind: true,
-        type: "panel"
+        type: "panel",
     });
     
     canvas.add(panelObject);
+    console.log('panel added: x - y - w - h: ' + x + ' ' + y + ' ' + w + ' ' + h);
     
     panelObject.on({'scaling': function(e) {
         var obj = this,
@@ -130,29 +125,65 @@ function addPanel(x, y, w, h) {
     });
 };
 
+// Calculate each panel size according to canvas size and gutter then add panels in defined row
+function addPanelRow(sr, r, c) {
+        var startRow = sr;    
+        var rows = r;
+        var columns = c;
+        var gutter = 15; 
+    
+        var pWidth = (cWidth - 24 - (gutter * (columns + 1)))/columns;
+        var pHeight = (cHeight - 24 - (gutter * (rows + 1)))/rows;
+        
+        for (i = 0; i < columns; i++) { 
+            addPanel(
+                9 + gutter + (gutter * i) + (pWidth * i), 
+                9 + (gutter * startRow) + (pHeight * (startRow - 1)), 
+                pWidth, 
+                pHeight);
+        }
+};
 
 // ADD LAYOUT (x (left) - y (top) - w - h)
 function createLayout(preset) {
-    console.log('pressed layout');
-    if (preset == 1) {                  // 3x3 template
-        addPanel(18, 18, 180, 263);
-        addPanel(207, 18, 180, 263);
-        addPanel(397, 18, 180, 263);
-        
-        addPanel(18, 290, 180, 263);
-        addPanel(207, 290, 180, 263);
-        addPanel(397, 290, 180, 263);
-        
-        addPanel(18, 562, 180, 263);
-        addPanel(207, 562, 180, 263);
-        addPanel(397, 562, 180, 263);
+    console.log('pressed layout: ' + preset);
+    switch(preset) {
+    case 1:                 // 3x3x3 layout
+        addPanelRow(1,3,3);
+        addPanelRow(2,3,3);    
+        addPanelRow(3,3,3);
+        break;
+    case 2:                 // 3x2x3 layout
+        addPanelRow(1,3,3);
+        addPanelRow(2,3,2);    
+        addPanelRow(3,3,3);    
+        break;
+    case 3:                 // 2x1x3 layout
+        addPanelRow(1,3,2);
+        addPanelRow(2,3,1);    
+        addPanelRow(3,3,3); 
+        break;
+    case 4:                 // 2x1x2 layout
+        addPanelRow(1,3,2);
+        addPanelRow(2,3,1);    
+        addPanelRow(3,3,2); 
+        break;
+    case 5:                 // 0x1x2 layout
+        addPanelRow(2,3,1);    
+        addPanelRow(3,3,2); 
+        break;
+    case 6:                 // 2x2 layout
+        addPanelRow(1,2,2);    
+        addPanelRow(2,2,2); 
+        break;  
+    case 7:                 // 1x1 layout
+        addPanelRow(1,2,1);    
+        addPanelRow(2,2,1); 
+        break;
+    
+    default:
+    console.log('Undefined layout ' + preset);  
     }
-    /* Add more presets: 
-        e.g:
-        else if(preset==2) then 
-            addPanels()
-            ...
-    */
 };
 
 // ADD SVG SHAPE (WORKING)
@@ -188,6 +219,11 @@ function addShape(shapeName) {
       canvas.renderAll();    
     });
 };
+
+// Rectangle, Circle, Triangle (used in addFobject() function)
+var rect2 = new fabric.Rect({ top: 100, left: 100, width: 50, height: 50, fill: '#212121' });   
+var circ = new fabric.Circle({ top: 140, left: 200, radius: 75, fill: '#212121' });
+var triang = new fabric.Triangle({ top: 200, left: 300, width: 100, height: 100, fill: '#212121' });
 
 // ADD FABRIC OBJECT
 function addFobject(clicked_id) {
@@ -240,6 +276,10 @@ function removeSelected() {
 function cleanCanvas() {
     canvas.clear()
     canvas.add(bleed);
+    lockedLayout = false;
+    $('#lockMessage').html('Lock');
+    $('#lockIcon').removeClass('fa-unlock');
+    $('#lockIcon').addClass('fa-lock');
   };
 
 // LAYER MANAGEMENT
@@ -303,10 +343,7 @@ function lockLayout() {
 // ------------------------- DRAWING MODE --------------------------------------
 // -----------------------------------------------------------------------------
 
-//('#testbutton').click(proba);
-
-// what is proba?
-function proba(){
+function drawingMode(){
     canvas.isDrawingMode = !canvas.isDrawingMode;
     if (canvas.isDrawingMode) {
         $('#proba').text('Exit drawing mode');

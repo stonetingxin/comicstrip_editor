@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
     <!-- Generator: Sketch 3.2 (9964) - http://www.bohemiancoding.com/sketch -->
-    <title>spanel</title>
+    <title>l11</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="spanel" sketch:type="MSArtboardGroup" stroke="#232323" stroke-width="4">
-            <rect id="Rectangle-5-4" sketch:type="MSShapeGroup" x="10.4473673" y="10.4409091" width="59.1052655" height="60.0590909"></rect>
+        <g id="l11" sketch:type="MSArtboardGroup" stroke="#232323">
+            <rect id="Rectangle-6-2" sketch:type="MSShapeGroup" x="3.97414176" y="4.361037" width="72.0517165" height="33.9759918"></rect>
+            <rect id="Rectangle-5-4" sketch:type="MSShapeGroup" x="3.97414176" y="41.9058263" width="72.0517165" height="33.9759918"></rect>
         </g>
     </g>
 </svg>

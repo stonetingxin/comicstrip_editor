@@ -39,19 +39,6 @@ Premium: http://www.gridgum.com
     display: none;
 }
 
-.inspector{
-    width: 200px;
-    height: 100%;
-    position: fixed;
-    right: 0px;
-    background: #f6f6f6;
-    padding-top: 55px;
-    padding-left: 6px;
-    padding-right: 6px;
-    /*border-left: 1px solid #272729;*/
-    float: left;
-}
-
 
 .comicbutton {
 
@@ -516,7 +503,6 @@ ul.sidebar-menu li a.active i {
 #main-content {
     background: rgb(191, 198, 207);
     margin-left: 315px;
-    margin-right: 200px;
     text-align: center;
 }
 
