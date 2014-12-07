@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Comic Strip Editor Applications - HCID M1 - University Paris Sud">
-    <meta name="author" content="Domonkos Horvath">
+    <meta name="description" content="Comic Strip Editor Application - HCID M1 - University Paris Sud">
+    <meta name="author" content="Domonkos Horvath, Leonardo Lanzinger">
     <meta name="keyword" content="Comic, Book, Strip, Editor, HCID, UPS">
 
     <title>COMIC STRIP EDITOR</title>
@@ -175,7 +175,9 @@
                     <!-- Button end -->
                     
                     
-                    <li><a href="#" id="clear-canvas" class="clearcanvas" onclick="cleanCanvas()"><i class="fa fa-refresh" style="margin-right: 10px"></i>Clean canvas</a></li>
+                    <li><a href="#" id="clear-canvas" class="clearcanvas" data-toggle="modal" data-target="#confirm-delete">
+                        <i class="fa fa-refresh" style="margin-right: 10px"></i>Clean canvas</a>
+                    </li>
             	</ul>
                 </div>
                 <!--  top menu RIGHT end -->
@@ -426,7 +428,7 @@
       <!--footer start-->
       <footer class="site-footer">
           <div class="text-center">
-              2014 - Domonkos Horvath
+              2014 - DH + LL
               <a href="#" class="go-top">
                   <i class="fa fa-angle-up"></i>
               </a>
@@ -434,6 +436,22 @@
       </footer>
       <!--footer end-->
     </section> <!--container section end-->
+      
+    <!-- MODAL for clean canvas -->  
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+            <h4>Clean Canvas</h4>    
+            <p>Are you sure you want to delete all objects on canvas?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-danger danger" onclick="cleanCanvas()" data-dismiss="modal">Delete all</a>
+            </div>
+        </div>
+    </div>
+    </div>  
       
     <!-- JQUERY and Content panel switcher -->
     <script src="assets/js/jquery.js"></script>

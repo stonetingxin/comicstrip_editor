@@ -2,7 +2,7 @@
  *  JavaScript Document:
  *  Comic Book JS scripts 
  *  
- *  Author: Domonkos Horvath
+ *  Authors: Domonkos Horvath & Leonardo Lanzinger
 */
 
 // canvas dimensions
@@ -46,9 +46,9 @@ var bleed = new fabric.Rect({
   left: 9,
   top: 9, 
   fill: 'transparent',    
-  width: 579,
-  height: 825,
-  stroke: 'rgba(255, 56, 56, 0.42)',
+  width: cWidth - 19,
+  height: cHeight - 19,
+  stroke: 'rgba(208, 37, 37, 0.3)',
   strokeWidth: 1,  
   perPixelTargetFind: true,
   selectable: false
@@ -84,11 +84,11 @@ var rect = new fabric.Rect({
   height: 50,  
 });
 
-/* Rectangle, Circle, Triangle (unused)
+// Rectangle, Circle, Triangle (used in addFobject() function)
 var rect2 = new fabric.Rect({ top: 100, left: 100, width: 50, height: 50, fill: '#212121' });   
 var circ = new fabric.Circle({ top: 140, left: 200, radius: 75, fill: '#212121' });
 var triang = new fabric.Triangle({ top: 200, left: 300, width: 100, height: 100, fill: '#212121' });
-*/
+
 
 // put test object and panel on canvas
 canvas.add(rect);
