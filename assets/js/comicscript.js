@@ -6,7 +6,7 @@
 */
 
 // canvas dimensions
-var cWidth = 598;
+var cWidth = 700;
 var cHeight = 843;
 var blueInkColor = '#00FFFF';       // BLUE INK color
 var customSVGColor = '#747474';     // Loaded SVG shapes color
@@ -37,7 +37,7 @@ initAligningGuidelines(canvas);             // Initialitzing Align guidelines
 fabric.Group.prototype.hasControls = false  // Group controls disabled
 fabric.Object.prototype.cornerSize = 9;
 fabric.Object.prototype.borderColor = '#25c4ff';
-fabric.Object.prototype.cornerColor = '#25c4ff';
+fabric.Object.prototype.cornerColor = '#b7e3ff';
 fabric.Object.prototype.transparentCorners = false;
 fabric.Object.prototype.borderOpacityWhenMoving = 0.8;
 
@@ -79,7 +79,7 @@ var panel = new fabric.Rect({
 var rect = new fabric.Rect({
   left: 230,
   top: 240, 
-  fill: '#e03939',    
+  fill: '#2feb53',    
   width: 50,
   height: 50,  
 });
@@ -226,9 +226,14 @@ function selectAllObjects(){
 
 // DELETE OBJECT
 function removeSelected() {
-    var activeObject = canvas.getActiveObject();
-    canvas.remove(activeObject);
-  };
+    if(canvas.getActiveGroup()){
+      canvas.getActiveGroup().forEachObject(function(o){ canvas.remove(o) });
+      canvas.discardActiveGroup().renderAll();
+    } else {
+      canvas.remove(canvas.getActiveObject());
+    }
+};
+
 
 // CLEAR CANVAS
 

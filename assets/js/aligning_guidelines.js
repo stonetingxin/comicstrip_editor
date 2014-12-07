@@ -12,7 +12,7 @@ function initAligningGuidelines(canvas) {
       aligningLineOffset = 5, //5
       aligningLineMargin = 5, //4
       aligningLineWidth = 1,
-      aligningLineColor = 'rgb(0, 221, 110)';
+      aligningLineColor = 'rgb(255, 25, 25)';
   
   function drawVerticalLine(coords) {
     drawLine(
