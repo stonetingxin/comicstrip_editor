@@ -35,12 +35,8 @@
       *********************************************************************************************************************************************************** -->
       <!--header start-->
       <header class="header black-bg">
-            <!--logo start 
-              <div class="sidebar-toggle-box">
-                  <div class="fa fa-book tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
-              </div>
-            logo start-->
-            <a href="index.html" class="logo"><b>COMIC STRIP EDITOR</b></a>
+
+            <a href="index.html" class="logo"><i class="fa fa-trello" style="padding: 0px 10px"></i><b>COMIC STRIP EDITOR</b></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  Top menu start -->
@@ -119,46 +115,49 @@
                     <!-- Button end -->
                     <!-- Button start -->  
                     <li>
-                    <a href="#" id="lockLayout" style="margin: 15px 30px 0px 0px;" class="locklayout" onclick="lockLayout()">
-                            <i id="lockIcon" class="fa fa-lock" style="margin-right: 10px"></i> <span id="lockMessage">Lock</span> layout 
-                    </a>
-                    </li>
-                    <!-- Button end -->
-                    <!-- Button start -->  
-                    <li>
-                    <a href="#" id="bringfront" style="margin-top: 15px; padding: 2px 9px;" onclick="layerManagement(this.id)">
+                    <a href="#" id="sendback" style="margin-top: 15px; padding: 2px 9px;" onclick="layerManagement(this.id)">
                             <i class="fa fa-step-forward fa-rotate-90"></i>
                     </a>
                     </li>
                     <!-- Button end -->
                     <!-- Button start -->  
                     <li>
-                    <a href="#" id="sendback" style="margin-top: 15px; padding: 2px 9px;" onclick="layerManagement(this.id)">
+                    <a href="#" id="bringfront" style="margin-top: 15px; padding: 2px 9px;" onclick="layerManagement(this.id)">
                             <i class="fa fa-step-forward fa-rotate-270"></i>
                     </a>
                     </li>
                     <!-- Button end -->
                     <!-- Button start -->  
                     <li>
-                    <a href="#" id="forward" style="margin-top: 15px;" onclick="layerManagement(this.id)">
+                    <a href="#" id="backward" style="margin-top: 15px;" onclick="layerManagement(this.id)">
                             <i class="fa fa-chevron-down"></i>
                     </a>
                     </li>
                     <!-- Button end -->
                     <!-- Button start -->  
                     <li class="pushleft">
-                    <a href="#" id="backward" style="margin: 15px 30px 0px 0px;" onclick="layerManagement(this.id)">
+                    <a href="#" id="forward" style="margin: 15px 30px 0px 0px;" onclick="layerManagement(this.id)">
                             <i class="fa fa-chevron-up"></i>
                     </a>
                     </li>
                     <!-- Button end -->
                     <!-- DELETE Button start -->  
                     <li class="margright">
-                    <a href="#" id="deleteselected" style="margin: 15px 30px 0px 0px;" onclick="removeSelected()">
+                    <a href="#" id="deleteselected" style="margin: 15px 60px 0px 0px;" onclick="removeSelected()">
                             <i class="fa fa-trash"></i>
                     </a>
                     </li>
                     <!-- DELETE Button end -->
+                    <!-- Button start -->  
+                    <li>
+                    <a href="#" id="lockLayout" style="margin: 15px 15px 0px 0px;" class="locklayout" onclick="lockLayout()">
+                            <i id="lockIcon" class="fa fa-lock" style="margin-right: 10px"></i> <span id="lockMessage">Lock</span> layout 
+                    </a>
+                    </li>
+                    <!-- Button end -->
+                    <li><a href="#" id="clear-canvas" style="margin: 15px 40px 0px 0px;" class="clearcanvas" data-toggle="modal" data-target="#confirm-delete">
+                        <i class="fa fa-refresh" style="margin-right: 10px"></i>Clean canvas</a>
+                    </li>
                     <!-- Button start -->  
                     <li class="dropdown">
                     <a href="#" style="margin-top: 15px;">
@@ -173,11 +172,6 @@
                     </a>
                     </li>
                     <!-- Button end -->
-                    
-                    
-                    <li><a href="#" id="clear-canvas" class="clearcanvas" data-toggle="modal" data-target="#confirm-delete">
-                        <i class="fa fa-refresh" style="margin-right: 10px"></i>Clean canvas</a>
-                    </li>
             	</ul>
                 </div>
                 <!--  top menu RIGHT end -->
@@ -351,12 +345,6 @@
                   <button id="triangle" onclick="addFobject(this.id)" class="btn btn-default comicbutton" href="">
                   <img src="assets/svg/triangle.svg" alt="map" height="60" width="60"><br />Triangle
                   </button>
-                  <button id="object1" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
-                  <img src="assets/svg/object1.svg" alt="map" height="60" width="60"><br />Fighter
-                  </button>
-                  <button id="object2" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
-                  <img src="assets/svg/object2.svg" alt="map" height="60" width="60"><br />Hummer
-                  </button>
                   <button id="object3" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
                   <img src="assets/svg/object3.svg" alt="map" height="60" width="60"><br />Bicycle
                   </button>
@@ -376,7 +364,7 @@
                   <img src="assets/svg/piramids.svg" alt="map" height="60" width="60"><br />Piramids
                   </button>
                   <button id="tajmahal" onclick="addShape(this.id)" class="btn btn-default comicbutton" href="">
-                  <img src="assets/svg/piramids.svg" alt="map" height="60" width="60"><br />Character
+                  <img src="assets/svg/tajmahal.svg" alt="map" height="60" width="60"><br />Taj Mahal
                   </button>
               </div>
               

@@ -61,20 +61,6 @@ var lockedLayout = false;
 // ------------------------- STARTING EXAMPLE FUNCTIONS ------------------------
 // -----------------------------------------------------------------------------
 
-//  single panel
-var panel = new fabric.Rect({
-    left: 100,
-    top: 100, 
-    fill: 'transparent',    
-    width: 100,
-    height: 100,
-    stroke: '#0f0f0f',
-    strokeWidth: 6,  
-    hasRotatingPoint: false,
-    perPixelTargetFind: true,
-    type: "panel"
-});
-
 // rectangle
 var rect = new fabric.Rect({
   left: 230,
@@ -85,8 +71,8 @@ var rect = new fabric.Rect({
 });
 
 // put test object and panel on canvas
+addPanel(50,50,140,140);
 canvas.add(rect);
-canvas.add(panel);
 
 // -----------------------------------------------------------------------------
 // ------------------------- OBJECTS CREATION ----------------------------------
@@ -123,6 +109,7 @@ function addPanel(x, y, w, h) {
             });
         }
     });
+
 };
 
 // Calculate each panel size according to canvas size and gutter then add panels in defined row
@@ -146,6 +133,7 @@ function addPanelRow(sr, r, c) {
 
 // ADD LAYOUT (x (left) - y (top) - w - h)
 function createLayout(preset) {
+    
     console.log('pressed layout: ' + preset);
     switch(preset) {
     case 1:                 // 3x3x3 layout
@@ -220,21 +208,19 @@ function addShape(shapeName) {
     });
 };
 
-// Rectangle, Circle, Triangle (used in addFobject() function)
-var rect2 = new fabric.Rect({ top: 100, left: 100, width: 50, height: 50, fill: '#212121' });   
-var circ = new fabric.Circle({ top: 140, left: 200, radius: 75, fill: '#212121' });
-var triang = new fabric.Triangle({ top: 200, left: 300, width: 100, height: 100, fill: '#212121' });
-
 // ADD FABRIC OBJECT
 function addFobject(clicked_id) {
     switch(clicked_id) {
     case "circle":
+            var circ = new fabric.Circle({ top: 140, left: 200, radius: 30, fill: '#212121' });
             canvas.add(circ);
             break;
     case "rectangle":
+            var rect2 = new fabric.Rect({ top: 100, left: 100, width: 50, height: 50, fill: '#212121' }); 
             canvas.add(rect2);
             break; 
     case "triangle":
+            var triang = new fabric.Triangle({ top: 200, left: 300, width: 70, height: 70, fill: '#212121' });
             canvas.add(triang);
             break;
     default:
@@ -305,13 +291,68 @@ function layerManagement(clicked_id){
 
 // BLUE INKING
 function blueInking(){
-    var temp = canvas.getActiveObject();
-    var typeo = canvas.getActiveObject().get('type');
-
-    console.log('added blueink for: ' + typeo);
-    temp.setFill(blueInkColor);
+    var temp;
+    var typeo;
+    
+     // If a group selected 
+    if(canvas.getActiveGroup()){     
+        canvas.getActiveGroup().forEachObject(function(o){ 
+        temp = o;
+        typeo = o.get('type'); 
+        console.log(typeo);  
+        switch(typeo) {
+            case 'panel':
+                console.log('Cannot change the color of panels');
+                break;
+            case 'path':    
+                if(temp.stroke == blueInkColor){
+                    temp.set({ stroke: customSVGColor}); 
+                }
+                else{
+                    temp.set({ stroke: blueInkColor});
+                }
+                break;
+            default:
+                if(temp.getFill() == blueInkColor){
+                    temp.setFill(customSVGColor); 
+                }
+                else{
+                    temp.setFill(blueInkColor); 
+                }    
+          }
+            //console.log('added blueink for: ' + typeo);
+          
+      }); 
+    // If a single objct selected   
+    } else {      
+        temp = canvas.getActiveObject();
+        typeo = canvas.getActiveObject().get('type');
+        console.log('added blueink for: ' + typeo);
+        switch(typeo) {
+            case 'panel':
+                console.log('Cannot change the color of panels');
+                break;
+            case 'path':
+                if(temp.stroke == blueInkColor){
+                    temp.set({ stroke: customSVGColor}); 
+                }
+                else{
+                    temp.set({ stroke: blueInkColor});
+                }
+                    
+                break;    
+            default:
+                if(temp.getFill() == blueInkColor){
+                    temp.setFill(customSVGColor); 
+                }
+                else{
+                    temp.setFill(blueInkColor); 
+                    temp.set({ stroke: blueInkColor});
+                }
+        }           
+    }
     canvas.renderAll();
-}
+}; // end of function
 
 // LOCK LAYOUT
 function lockLayout() {
@@ -337,7 +378,7 @@ function lockLayout() {
         $('#lockIcon').removeClass('fa-unlock');
         $('#lockIcon').addClass('fa-lock');
     }
-}
+};
 
 // -----------------------------------------------------------------------------
 // ------------------------- DRAWING MODE --------------------------------------
@@ -362,6 +403,8 @@ function drawingMode(){
 // -----------------------------------------------------------------------------
 
 // PANEL SCALING KEEPS STROKEWIDTH THE SAME
+
+/*
 panel.on({'scaling': function(e) {
         var obj = this,
             w = obj.width * obj.scaleX,
@@ -376,6 +419,6 @@ panel.on({'scaling': function(e) {
             });
          }
      });
-
+*/
 
 
