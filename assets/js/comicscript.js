@@ -14,6 +14,9 @@ var customSVGColor = '#0b0b0b';     // Loaded SVG shapes color
 // canvas object
 var canvas_1;
 
+// set to true if layout is created
+var layout = false;
+
 canvas_1 = document.createElement("canvas");                        // CREATE CANVAS TAG
 canvas_1.id = "c";                                                  // SET CANVAS ID
 document.getElementById("canvasgoeshere").appendChild(canvas_1);    // Add canvas to container in HTML
@@ -133,44 +136,49 @@ function addPanelRow(sr, r, c) {
 
 // ADD LAYOUT (x (left) - y (top) - w - h)
 function createLayout(preset) {
+    checkLayout();
+    if (!layout) { 
     
-    console.log('pressed layout: ' + preset);
-    switch(preset) {
-    case 1:                 // 3x3x3 layout
-        addPanelRow(1,3,3);
-        addPanelRow(2,3,3);    
-        addPanelRow(3,3,3);
-        break;
-    case 2:                 // 3x2x3 layout
-        addPanelRow(1,3,3);
-        addPanelRow(2,3,2);    
-        addPanelRow(3,3,3);    
-        break;
-    case 3:                 // 2x1x3 layout
-        addPanelRow(1,3,2);
-        addPanelRow(2,3,1);    
-        addPanelRow(3,3,3); 
-        break;
-    case 4:                 // 2x1x2 layout
-        addPanelRow(1,3,2);
-        addPanelRow(2,3,1);    
-        addPanelRow(3,3,2); 
-        break;
-    case 5:                 // 0x1x2 layout
-        addPanelRow(2,3,1);    
-        addPanelRow(3,3,2); 
-        break;
-    case 6:                 // 2x2 layout
-        addPanelRow(1,2,2);    
-        addPanelRow(2,2,2); 
-        break;  
-    case 7:                 // 1x1 layout
-        addPanelRow(1,2,1);    
-        addPanelRow(2,2,1); 
-        break;
-    
-    default:
-    console.log('Undefined layout ' + preset);  
+        console.log('pressed layout: ' + preset);
+        switch(preset) {
+        case 1:                 // 3x3x3 layout
+            addPanelRow(1,3,3);
+            addPanelRow(2,3,3);    
+            addPanelRow(3,3,3);
+            break;
+        case 2:                 // 3x2x3 layout
+            addPanelRow(1,3,3);
+            addPanelRow(2,3,2);    
+            addPanelRow(3,3,3);    
+            break;
+        case 3:                 // 2x1x3 layout
+            addPanelRow(1,3,2);
+            addPanelRow(2,3,1);    
+            addPanelRow(3,3,3); 
+            break;
+        case 4:                 // 2x1x2 layout
+            addPanelRow(1,3,2);
+            addPanelRow(2,3,1);    
+            addPanelRow(3,3,2); 
+            break;
+        case 5:                 // 0x1x2 layout
+            addPanelRow(2,3,1);    
+            addPanelRow(3,3,2); 
+            break;
+        case 6:                 // 2x2 layout
+            addPanelRow(1,2,2);    
+            addPanelRow(2,2,2); 
+            break;  
+        case 7:                 // 1x1 layout
+            addPanelRow(1,2,1);    
+            addPanelRow(2,2,1); 
+            break;
+        
+        default:
+        console.log('Undefined layout ' + preset);  
+        }
+
+        layout = true;
     }
 };
 
@@ -266,6 +274,7 @@ function cleanCanvas() {
     $('#lockMessage').html('Lock');
     $('#lockIcon').removeClass('fa-unlock');
     $('#lockIcon').addClass('fa-lock');
+    layout = false;
   };
 
 // LAYER MANAGEMENT
@@ -379,6 +388,23 @@ function lockLayout() {
         $('#lockIcon').addClass('fa-lock');
     }
 };
+
+// CHECK IF LAYOUT HAS PANELS IN IT
+function checkLayout() {
+    layout = false;
+    for (var i=0; i<canvas.getObjects().length; i++) {
+        if (canvas.item(i).type == 'panel') {
+            layout = true;        
+        }
+    }
+}
+
+// backspace deletes selected element
+$('html').keyup(function(e){
+    if(e.keyCode == 8) {
+        removeSelected();
+    }
+}) ;
 
 // -----------------------------------------------------------------------------
 // ------------------------- DRAWING MODE --------------------------------------
