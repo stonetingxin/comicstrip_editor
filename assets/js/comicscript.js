@@ -17,6 +17,11 @@ var canvas_1;
 // set to true if layout is created
 var layout = false;
 
+// JSON array: history array
+var JSON_array = new Array();
+var redo_array = new Array();
+event_on_canvas = true;
+
 canvas_1 = document.createElement("canvas");                        // CREATE CANVAS TAG
 canvas_1.id = "c";                                                  // SET CANVAS ID
 document.getElementById("canvasgoeshere").appendChild(canvas_1);    // Add canvas to container in HTML
@@ -45,17 +50,36 @@ fabric.Object.prototype.transparentCorners = false;
 fabric.Object.prototype.borderOpacityWhenMoving = 0.8;
 
 // BLEED AREA (what is this?)
-var bleed = new fabric.Rect({
-  left: 9,
-  top: 9, 
-  fill: 'transparent',    
-  width: cWidth - 19,
-  height: cHeight - 19,
-  stroke: 'rgba(208, 37, 37, 0.3)',
-  strokeWidth: 1,  
-  perPixelTargetFind: true,
-  selectable: false
+fabric.Bleed = fabric.util.createClass(fabric.Rect, {
+
+    type: 'Bleed',
+    left: 9,
+    top: 9, 
+    fill: 'transparent',    
+    width: cWidth - 19,
+    height: cHeight - 19,
+    stroke: 'rgba(208, 37, 37, 0.3)',
+    strokeWidth: 1,  
+    perPixelTargetFind: true,
+    selectable: false,
+
+    initialize: function(element, options) {
+        this.callSuper('initialize', element, options);
+    },
+
+    toObject: function() {
+        return fabric.util.object.extend(this.callSuper('toObject'));
+    }
 });
+
+fabric.Bleed.fromObject = function(object, callback) {
+    callback && callback(new fabric.Bleed());
+};
+
+fabric.Bleed.async = true;
+
+var bleed = new fabric.Bleed();
+
 canvas.add(bleed);
 
 var lockedLayout = false;
@@ -74,44 +98,102 @@ var rect = new fabric.Rect({
 });
 
 // put test object and panel on canvas
-addPanel(50,50,140,140);
+// addPanel(50,50,140,140);
 canvas.add(rect);
+
+// rectangle
+var rect_2 = new fabric.Rect({
+  left: 330,
+  top: 440, 
+  fill: '#ff0053',    
+  width: 100,
+  height: 100,  
+});
+
+canvas.add(rect_2);
+
 
 // -----------------------------------------------------------------------------
 // ------------------------- OBJECTS CREATION ----------------------------------
 // -----------------------------------------------------------------------------
+
+//Panel Object
+fabric.Panel = fabric.util.createClass(fabric.Rect, {
+
+    type: 'Panel',
+    fill: 'transparent',
+    stroke: '#0f0f0f',
+    strokeWidth: 6,  
+    hasRotatingPoint: false,
+    perPixelTargetFind: true,  
+    
+    initialize: function(options) {
+        options;
+        // this.left = 100;
+        // this.top = 100;
+        // this.width = 60;
+        // this.height = 60;
+        this.callSuper('initialize', options);
+    },
+
+    toObject: function() {
+        return fabric.util.object.extend(this.callSuper('toObject'));
+    }
+    ,
+
+    _render: function(ctx) {
+        this.callSuper('_render', ctx);
+    }
+});
+
+fabric.Panel.fromObject = function(object, callback) {
+    callback && callback(new fabric.Panel());
+};
+
+// fabric.Panel.on({'scaling': function(e) {
+//     var obj = this,
+//         w = obj.width * obj.scaleX,
+//         h = obj.height * obj.scaleY,
+//         s = obj.strokeWidth;
+
+//     obj.set({
+//         'height'     : h,
+//         'width'      : w,
+//         'scaleX'     : 1,
+//         'scaleY'     : 1
+//         });
+//     }
+// });
+
+fabric.Panel.async = true;
+
+var panelObjectTest = new fabric.Panel({
+    left: 200,
+    top: 300,    
+    width: 50,
+    height: 100
+});
+
+canvas.add(panelObjectTest);
+
+// console.log("just created and added to canvas " + canvas.getObjects().length + " items");
+
+createJSON();
+
+
 //ADD PANEL FUNCTION
 function addPanel(x, y, w, h) {
-    var panelObject = new fabric.Rect({
-        left: x,
-        top: y, 
-        fill: 'transparent',    
-        width: w,
-        height: h,
-        stroke: '#0f0f0f',
-        strokeWidth: 6,  
-        hasRotatingPoint: false,
-        perPixelTargetFind: true,
-        type: "panel",
+
+    var panelObject = new Panel({
+        // left: x,
+        // top: y,    
+        // width: w,
+        // height: h
     });
     
     canvas.add(panelObject);
-    console.log('panel added: x - y - w - h: ' + x + ' ' + y + ' ' + w + ' ' + h);
-    
-    panelObject.on({'scaling': function(e) {
-        var obj = this,
-            w = obj.width * obj.scaleX,
-            h = obj.height * obj.scaleY,
-            s = obj.strokeWidth;
 
-        obj.set({
-            'height'     : h,
-            'width'      : w,
-            'scaleX'     : 1,
-            'scaleY'     : 1
-            });
-        }
-    });
+    console.log('panel added: x - y - w - h: ' + x + ' ' + y + ' ' + w + ' ' + h);
 
 };
 
@@ -428,8 +510,28 @@ function drawingMode(){
 // --------------------------- EVENTS ------------------------------------------
 // -----------------------------------------------------------------------------
 
-// PANEL SCALING KEEPS STROKEWIDTH THE SAME
+// CANVAS EVENT
+canvas.on('path:created', function(e) {
+    event_on_canvas = true;
+});
 
+canvas.on('object:modified', function(e) {
+    event_on_canvas = true;
+});
+
+canvas.on('object:removed', function(e) {
+    event_on_canvas = true;
+});
+
+canvas.on('canvas:cleared', function(e) {
+    event_on_canvas = true;
+});
+
+canvas.on('mouse:up', function(e) {
+    createJSON();
+});
+
+// PANEL SCALING KEEPS STROKEWIDTH THE SAME
 /*
 panel.on({'scaling': function(e) {
         var obj = this,
@@ -446,5 +548,65 @@ panel.on({'scaling': function(e) {
          }
      });
 */
+
+
+// -----------------------------------------------------------------------------
+// --------------------------- JSON ------------------------------------------
+// -----------------------------------------------------------------------------
+
+function createJSON() {
+    if (event_on_canvas == true) {
+        var json = JSON.stringify(canvas);
+        JSON_array.push(json);
+        event_on_canvas = false;
+        // TODO: set redo button unavailable! ???
+        console.log("created JSON");
+        redo_array = [];
+        // console.log("trying to render " + canvas.getObjects().length + " items");
+        canvas.clear();
+        renderJSON();
+    }
+}
+
+function renderJSON() {
+    // console.log("trying to render JSON");
+    var json = JSON_array[JSON_array.length - 1];
+    // console.log("JSON object:");
+    // console.log(json);
+
+    canvas.loadFromDatalessJSON(json, function() {
+
+      canvas.renderAll.bind(canvas);
+
+      // console.log("rendering " + canvas.getObjects().length + " items");
+
+      // for (var i = 0; i < canvas.getObjects().length; i++) {
+      //       console.log("logging item in JSON n " + i + ":");
+      //       console.log(canvas.item[i]);
+      // }
+    },
+    // logging function -> to delete
+    function (o, object) {
+    //     console.log("trying to load item");
+    //     console.log(o);
+    }
+    );
+}
+
+function undo() {
+    if (JSON_array.length > 1) {
+        var redo = JSON_array.pop();
+        redo_array.push(redo);
+        renderJSON();
+    }
+}
+
+function redo() {
+    if (redo_array.length > 0) {
+        var redo_json = redo_array.pop();
+        JSON_array.push(redo_json);
+        renderJSON();
+    }
+}
 
 
