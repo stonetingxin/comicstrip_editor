@@ -88,114 +88,79 @@ var lockedLayout = false;
 // ------------------------- STARTING EXAMPLE FUNCTIONS ------------------------
 // -----------------------------------------------------------------------------
 
-// rectangle
-var rect = new fabric.Rect({
-  left: 230,
-  top: 240, 
-  fill: '#2feb53',    
-  width: 50,
-  height: 50,  
-});
+// // rectangle
+// var rect = new fabric.Rect({
+//   left: 230,
+//   top: 240, 
+//   fill: '#2feb53',    
+//   width: 50,
+//   height: 50,  
+// });
 
-// put test object and panel on canvas
-// addPanel(50,50,140,140);
-canvas.add(rect);
+// // put test object and panel on canvas
+// // addPanel(50,50,140,140);
+// canvas.add(rect);
 
-// rectangle
-var rect_2 = new fabric.Rect({
-  left: 330,
-  top: 440, 
-  fill: '#ff0053',    
-  width: 100,
-  height: 100,  
-});
+// // rectangle
+// var rect_2 = new fabric.Rect({
+//   left: 330,
+//   top: 440, 
+//   fill: '#ff0053',    
+//   width: 100,
+//   height: 100,  
+// });
 
-canvas.add(rect_2);
+// canvas.add(rect_2);
 
 
 // -----------------------------------------------------------------------------
 // ------------------------- OBJECTS CREATION ----------------------------------
 // -----------------------------------------------------------------------------
 
-//Panel Object
-fabric.Panel = fabric.util.createClass(fabric.Rect, {
-
-    type: 'Panel',
-    fill: 'transparent',
-    stroke: '#0f0f0f',
-    strokeWidth: 6,  
-    hasRotatingPoint: false,
-    perPixelTargetFind: true,  
-    
-    initialize: function(options) {
-        options;
-        // this.left = 100;
-        // this.top = 100;
-        // this.width = 60;
-        // this.height = 60;
-        this.callSuper('initialize', options);
-    },
-
-    toObject: function() {
-        return fabric.util.object.extend(this.callSuper('toObject'));
-    }
-    ,
-
-    _render: function(ctx) {
-        this.callSuper('_render', ctx);
-    }
-});
-
-fabric.Panel.fromObject = function(object, callback) {
-    callback && callback(new fabric.Panel());
-};
-
-// fabric.Panel.on({'scaling': function(e) {
-//     var obj = this,
-//         w = obj.width * obj.scaleX,
-//         h = obj.height * obj.scaleY,
-//         s = obj.strokeWidth;
-
-//     obj.set({
-//         'height'     : h,
-//         'width'      : w,
-//         'scaleX'     : 1,
-//         'scaleY'     : 1
-//         });
-//     }
-// });
-
-fabric.Panel.async = true;
-
-var panelObjectTest = new fabric.Panel({
-    left: 200,
-    top: 300,    
-    width: 50,
-    height: 100
-});
-
-canvas.add(panelObjectTest);
-
-// console.log("just created and added to canvas " + canvas.getObjects().length + " items");
-
-createJSON();
-
-
 //ADD PANEL FUNCTION
 function addPanel(x, y, w, h) {
 
-    var panelObject = new Panel({
-        // left: x,
-        // top: y,    
-        // width: w,
-        // height: h
+    var panelObject = new fabric.Rect({
+        left: x,
+        top: y, 
+        fill: 'transparent',    
+        width: w,
+        height: h,
+        stroke: '#0f0f0f',
+        strokeWidth: 6,  
+        hasRotatingPoint: false,
+        perPixelTargetFind: true,
+        panel: true                 // HOORAY!
+    });
+    
+    panelObject.on({'scaling': function(e) {
+        var obj = this,
+            w = obj.width * obj.scaleX,
+            h = obj.height * obj.scaleY,
+            s = obj.strokeWidth;
+
+        obj.set({
+            'height'     : h,
+            'width'      : w,
+            'scaleX'     : 1,
+            'scaleY'     : 1
+            });
+        }
     });
     
     canvas.add(panelObject);
-
-    console.log('panel added: x - y - w - h: ' + x + ' ' + y + ' ' + w + ' ' + h);
-
+    
+    createJSON();
 };
+
+fabric.Object.prototype.toObject = (function (toObject) {
+    return function () {
+        return fabric.util.object.extend(toObject.call(this), {
+            hasRotatingPoint: this.hasRotatingPoint,
+            panel: this.panel
+        });
+    };
+})(fabric.Object.prototype.toObject);
 
 // Calculate each panel size according to canvas size and gutter then add panels in defined row
 function addPanelRow(sr, r, c) {
@@ -392,9 +357,6 @@ function blueInking(){
         typeo = o.get('type'); 
         console.log(typeo);  
         switch(typeo) {
-            case 'panel':
-                console.log('Cannot change the color of panels');
-                break;
             case 'path':    
                 if(temp.stroke == blueInkColor){
                     temp.set({ stroke: customSVGColor}); 
@@ -404,11 +366,13 @@ function blueInking(){
                 }
                 break;
             default:
-                if(temp.getFill() == blueInkColor){
-                    temp.setFill(customSVGColor); 
-                }
-                else{
-                    temp.setFill(blueInkColor); 
+                if (!o.panel) {
+                    if(temp.getFill() == blueInkColor){
+                        temp.setFill(customSVGColor); 
+                    }
+                    else{
+                        temp.setFill(blueInkColor); 
+                    }
                 }    
           }
             //console.log('added blueink for: ' + typeo);
@@ -420,7 +384,7 @@ function blueInking(){
         typeo = canvas.getActiveObject().get('type');
         console.log('added blueink for: ' + typeo);
         switch(typeo) {
-            case 'panel':
+            case 'Panel':
                 console.log('Cannot change the color of panels');
                 break;
             case 'path':
@@ -449,7 +413,7 @@ function blueInking(){
 function lockLayout() {
     if (!lockedLayout) {    // lock it        
         for (var i=0; i<canvas.getObjects().length; i++) {
-            if (canvas.item(i).type == 'panel') {
+            if (canvas.item(i).type == 'Panel') {
                 canvas.item(i).selectable = false;
             }
         }
@@ -475,7 +439,7 @@ function lockLayout() {
 function checkLayout() {
     layout = false;
     for (var i=0; i<canvas.getObjects().length; i++) {
-        if (canvas.item(i).type == 'panel') {
+        if (canvas.item(i).panel) {
             layout = true;        
         }
     }
@@ -516,6 +480,7 @@ canvas.on('path:created', function(e) {
 });
 
 canvas.on('object:modified', function(e) {
+    console.log("true");
     event_on_canvas = true;
 });
 
@@ -566,6 +531,7 @@ function createJSON() {
         canvas.clear();
         renderJSON();
     }
+    event_on_canvas = false;
 }
 
 function renderJSON() {
@@ -574,7 +540,7 @@ function renderJSON() {
     // console.log("JSON object:");
     // console.log(json);
 
-    canvas.loadFromDatalessJSON(json, function() {
+    canvas.loadFromJSON(json, function() {
 
       canvas.renderAll.bind(canvas);
 
@@ -587,10 +553,23 @@ function renderJSON() {
     },
     // logging function -> to delete
     function (o, object) {
-    //     console.log("trying to load item");
-    //     console.log(o);
-    }
-    );
+        if (object.panel) {
+            object.on({'scaling': function(e) {
+                var obj = this,
+                w = obj.width * obj.scaleX,
+                h = obj.height * obj.scaleY,
+                s = obj.strokeWidth;
+
+                obj.set({
+                    'height'     : h,
+                    'width'      : w,
+                    'scaleX'     : 1,
+                    'scaleY'     : 1
+                    });
+                }
+            });     
+        }
+    });
 }
 
 function undo() {
