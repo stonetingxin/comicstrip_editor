@@ -84,6 +84,8 @@ canvas.add(bleed);
 
 var lockedLayout = false;
 
+createJSON();
+
 // -----------------------------------------------------------------------------
 // ------------------------- STARTING EXAMPLE FUNCTIONS ------------------------
 // -----------------------------------------------------------------------------
@@ -149,7 +151,6 @@ function addPanel(x, y, w, h) {
     });
     
     canvas.add(panelObject);
-    
     createJSON();
 };
 
@@ -260,6 +261,8 @@ function addShape(shapeName) {
       console.log('adding shape: ' + shapeName + ', paths lenght: ' + loadedObject.paths.length);    
       canvas.add(loadedObject);
       canvas.renderAll();    
+      event_on_canvas = true;
+      createJSON();
     });
 };
 
@@ -269,14 +272,20 @@ function addFobject(clicked_id) {
     case "circle":
             var circ = new fabric.Circle({ top: 140, left: 200, radius: 30, fill: '#212121' });
             canvas.add(circ);
+            event_on_canvas = true;
+            createJSON();
             break;
     case "rectangle":
             var rect2 = new fabric.Rect({ top: 100, left: 100, width: 50, height: 50, fill: '#212121' }); 
             canvas.add(rect2);
+            event_on_canvas = true;
+            createJSON();
             break; 
     case "triangle":
             var triang = new fabric.Triangle({ top: 200, left: 300, width: 70, height: 70, fill: '#212121' });
             canvas.add(triang);
+            event_on_canvas = true;
+            createJSON();
             break;
     default:
     }
@@ -309,6 +318,7 @@ function removeSelected() {
     } else {
       canvas.remove(canvas.getActiveObject());
     }
+    createJSON();
 };
 
 
@@ -322,26 +332,37 @@ function cleanCanvas() {
     $('#lockIcon').removeClass('fa-unlock');
     $('#lockIcon').addClass('fa-lock');
     layout = false;
+    createJSON();
   };
 
 // LAYER MANAGEMENT
 function layerManagement(clicked_id){
     
     var activeObject = canvas.getActiveObject();
-    switch(clicked_id) {
-    case "backward":
-            canvas.sendBackwards(activeObject);
-            break;
-    case "forward":
-            canvas.bringForward(activeObject);
-            break; 
-    case "sendback":
-            canvas.sendToBack(activeObject);
-            break;
-    case "bringfront":
-            canvas.bringToFront(activeObject);
-            break;
-    default:
+    if (activeObject != null) {
+        switch(clicked_id) {
+        case "backward":
+                canvas.sendBackwards(activeObject);
+                event_on_canvas = true;
+                createJSON();
+                break;
+        case "forward":
+                canvas.bringForward(activeObject);
+                event_on_canvas = true;
+                createJSON();
+                break; 
+        case "sendback":
+                canvas.sendToBack(activeObject);
+                event_on_canvas = true;
+                createJSON();
+                break;
+        case "bringfront":
+                canvas.bringToFront(activeObject);
+                event_on_canvas = true;
+                createJSON();
+                break;
+        default:
+        }
     }
 };
 
@@ -406,6 +427,8 @@ function blueInking(){
         }           
     }
     canvas.renderAll();
+    event_on_canvas = true;
+    createJSON();
 }; // end of function
 
 // LOCK LAYOUT
@@ -448,6 +471,8 @@ function checkLayout() {
 $('html').keyup(function(e){
     if(e.keyCode == 8) {
         removeSelected();
+        event_on_canvas = true;
+        createJSON();
     }
 }) ;
 
@@ -479,7 +504,6 @@ canvas.on('path:created', function(e) {
 });
 
 canvas.on('object:modified', function(e) {
-    console.log("true");
     event_on_canvas = true;
 });
 
