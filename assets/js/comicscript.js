@@ -384,9 +384,6 @@ function blueInking(){
         typeo = canvas.getActiveObject().get('type');
         console.log('added blueink for: ' + typeo);
         switch(typeo) {
-            case 'Panel':
-                console.log('Cannot change the color of panels');
-                break;
             case 'path':
                 if(temp.stroke == blueInkColor){
                     temp.set({ stroke: customSVGColor}); 
@@ -397,12 +394,14 @@ function blueInking(){
                     
                 break;    
             default:
-                if(temp.getFill() == blueInkColor){
-                    temp.setFill(customSVGColor); 
-                }
-                else{
-                    temp.setFill(blueInkColor); 
-                    temp.set({ stroke: blueInkColor});
+                if (!temp.panel) {
+                    if(temp.getFill() == blueInkColor){
+                        temp.setFill(customSVGColor); 
+                    }
+                    else{
+                        temp.setFill(blueInkColor); 
+                        temp.set({ stroke: blueInkColor});
+                    }
                 }
         }           
     }
