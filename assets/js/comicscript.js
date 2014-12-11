@@ -413,7 +413,7 @@ function blueInking(){
 function lockLayout() {
     if (!lockedLayout) {    // lock it        
         for (var i=0; i<canvas.getObjects().length; i++) {
-            if (canvas.item(i).type == 'Panel') {
+            if (canvas.item(i).panel) {
                 canvas.item(i).selectable = false;
             }
         }
@@ -424,7 +424,7 @@ function lockLayout() {
     }
     else {                  // unlock it
         for (var i=0; i<canvas.getObjects().length; i++) {
-            if (canvas.item(i).type == 'panel') {
+            if (canvas.item(i).panel) {
                 canvas.item(i).selectable = true;
             }
         }
