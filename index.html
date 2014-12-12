@@ -28,7 +28,6 @@
   </head>
 
   <body>
-
   <section id="container" >
       <!-- **********************************************************************************************************************************************************
       TOP BAR CONTENT & NOTIFICATIONS
@@ -160,14 +159,21 @@
                     </li>
                     <!-- Button start -->  
                     <li class="dropdown">
-                    <a href="#" style="margin-top: 15px;">
+                    <a href="#" style="margin-top: 15px;" data-toggle="modal" data-target="#save-canvas">
                             <i class="fa fa-download"></i>
                     </a>
                     </li>
                     <!-- Button end -->
                     <!-- Button start -->  
                     <li class="dropdown">
-                    <a href="#" style="margin-top: 15px;">
+                    <a href="#" style="margin-top: 15px;" data-toggle="modal" data-target="#load-canvas">
+                            <i class="fa fa-upload"></i>
+                    </a>
+                    </li>
+                    <!-- Button end -->
+                    <!-- Button start -->  
+                    <li class="dropdown">
+                    <a href="#" style="margin-top: 15px;" onclick="printCanvas()">
                             <i class="fa fa-print"></i>
                     </a>
                     </li>
@@ -229,14 +235,14 @@
                           <span>Draw</span>
                       </a>
                   </li>
-                  
+                  <!-- Works only with server
                   <li>
                       <a id="uploads" class="switcher" >
                           <i class="fa fa-cloud-upload"></i><br>
                           <span>Uploads</span>
                       </a>
                   </li>
-                  
+                  -->
               </ul>
               <!-- sidebar menu end-->
           </div>
@@ -401,6 +407,7 @@
               <div id="uploads-content" class="switcher-content">
                   <h3>UPLOADS</h3>
                   <h5>Feature is coming </h5>
+                  <div id="printdiv"></div>
               </div>
           </div>
       </aside>
@@ -439,7 +446,7 @@
       <!--footer end-->
     </section> <!--container section end-->
       
-    <!-- MODAL for clean canvas -->  
+    <!-- MODAL for CLEAN canvas -->  
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -454,10 +461,65 @@
         </div>
     </div>
     </div>  
+
+    <!-- MODAL for SAVE canvas -->  
+    <div class="modal fade" id="save-canvas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 800px">
+        <div class="modal-content">
+            <div class="modal-body">
+              <h4>Save Canvas</h4>    
+              <p>Add name for your canvas:</p>
+                
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <input type="text" id="set-name" class="form-control" placeholder="Untitled page">
+                </div>
+              </div>
+              </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-primary " onclick="set()" data-dismiss="modal">Save</a>
+            </div>
+        </div>
+    </div>0
+    </div> 
+
+    <!-- MODAL for LOAD canvas -->  
+    <div class="modal fade" id="load-canvas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 700px">
+        <div class="modal-content">
+            <div class="modal-body">
+            <h4>Load Canvas</h4>    
+            <p>Choose a previous page and load it.</p>
+              <div id="list">
+                <!-- Saved page goes here -->
+                <div class="row">
+                <div class="col-md-8">
+                  <input type="text" id="disabledInput" class="form-control" placeholder="Untitled comic page" disabled>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" onclick="loadCanvasJSON()"><span class="glyphicon glyphicon-play"></span> Load </button>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger" onclick="removeRow(this.parentNode)"><span class="glyphicon glyphicon-delete"></span> Remove</button>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+    </div> 
       
     <!-- JQUERY and Content panel switcher -->
     <script src="assets/js/jquery.js"></script>
     <script src="assets/js/jquery.content-panel-switcher.js"></script>  
+    <script src="assets/js/FileSaver.min.js"></script>
+    <script src="assets/js/jQuery.print.js"></script>
+    <script src="assets/js/canvas-toBlob.js"></script>
+    <script src="assets/js/simpleStorage.js"></script>  
 
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="assets/js/bootstrap.min.js"></script>
