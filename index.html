@@ -166,7 +166,7 @@
                     <!-- Button end -->
                     <!-- Button start -->  
                     <li class="dropdown">
-                    <a href="#" style="margin-top: 15px;" data-toggle="modal" data-target="#load-canvas">
+                    <a href="#" style="margin-top: 15px;" data-toggle="modal" data-target="#load-canvas" onclick="showStorage()">
                             <i class="fa fa-upload"></i>
                     </a>
                     </li>
@@ -472,13 +472,14 @@
                 
               <div class="row">
                 <div class="col-md-12 form-group">
+                  <!-- get name from here and put it into save canvas -->
                   <input type="text" id="set-name" class="form-control" placeholder="Untitled page">
                 </div>
               </div>
               </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a href="#" class="btn btn-primary " onclick="saveCanvasJSON()" data-dismiss="modal">Save</a>
+                <a href="#" class="btn btn-primary " onclick="var key = document.getElementById('set-name').value;saveCanvasJSON(key)" data-dismiss="modal">Save</a>
             </div>
         </div>
     </div>0
@@ -492,21 +493,12 @@
             <h4>Load Canvas</h4>    
             <p>Choose a previous page and load it.</p>
               <div id="list">
-                <!-- Saved page goes here -->
-                <div class="row">
-                <div class="col-md-8">
-                  <input type="text" id="disabledInput" class="form-control" placeholder="Untitled comic page" disabled>
-                </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-primary" onclick="loadCanvasJSON()"><span class="glyphicon glyphicon-play"></span> Load </button>
-                </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-danger" onclick="removeRow(this.parentNode)"><span class="glyphicon glyphicon-delete"></span> Remove</button>
-                </div>
+                <!-- Saved pages go here -->
+                
               </div>
             </div>
-            </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="flushStorage();" data-dismiss="modal"><span class="glyphicon glyphicon-delete"></span>Delete all</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div>
         </div>

@@ -499,28 +499,41 @@ function drawingMode(){
 // --------------------------- SAVE / PRINT CANVAS -----------------------------
 // -----------------------------------------------------------------------------
 
-var key = 0;
+// var key = 0;
 
-function saveCanvasJSON(){
+function saveCanvasJSON(key){
     savedJSON = JSON.stringify(canvas);
     simpleStorage.set(key, savedJSON);
-    alert("Canvas saved to JSON file in browser - jStorage");
+    $('#list').append('<div class="row"><div class="col-md-8">'+ key +'</div><div class="col-md-2"><button type="button" class="btn btn-primary" onclick="loadCanvasJSON(\''+key+'\')" data-dismiss="modal"><span class="glyphicon glyphicon-play"></span> Load </button></div><div class="col-md-2"><button type="button" class="btn btn-danger" onclick="removeRow(this.parentNode)"><span class="glyphicon glyphicon-delete"></span> Remove</button></div></div>');
+    // alert("Canvas saved to JSON file in browser - jStorage with key " + key);
 }
 
-function loadCanvasJSON(){
+function loadCanvasJSON(key){
     savedJSON = simpleStorage.get(key)
     canvas.loadFromJSON(savedJSON);
-    alert('JSON file succesfully loaded' + savedJSON);
+    // alert('JSON file succesfully loaded' + savedJSON);
 }
 
 function printCanvas() {  
     simpleStorage.set('key1', 'test');
     value = simpleStorage.get('key1')  
-    alert("test"+value);
+    // alert("test"+value);
     $('#printdiv').prepend('<img id="printCanvas" src="' + canvas.toDataURL('png') + '" />')
     $.print("#printdiv");
 }
 
+function showStorage() {
+    var list = simpleStorage.index();
+    for (var i=0; i < list.length; i++) {
+        console.log("list: " + list[i]);
+        // $('#list').append('<div class="row"><div class="col-md-8">'+ list[i] +'</div><div class="col-md-2"><button type="button" class="btn btn-primary" onclick="loadCanvasJSON(\''+list[i]+'\')" data-dismiss="modal"><span class="glyphicon glyphicon-play"></span> Load </button></div><div class="col-md-2"><button type="button" class="btn btn-danger" onclick="removeRow(this.parentNode)"><span class="glyphicon glyphicon-delete"></span> Remove</button></div></div>');
+    }
+}
+
+function flushStorage() {
+    simpleStorage.flush();
+    $('#list').html("");
+}
 
 // -----------------------------------------------------------------------------
 // --------------------------- EVENTS ------------------------------------------
