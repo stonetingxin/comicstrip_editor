@@ -50,7 +50,6 @@ fabric.Object.prototype.transparentCorners = false;
 fabric.Object.prototype.borderOpacityWhenMoving = 0.8;
 
 // BLEED AREA (what is this?)
-<<<<<<< Updated upstream
 fabric.Bleed = fabric.util.createClass(fabric.Rect, {
 
     type: 'Bleed',
@@ -71,17 +70,6 @@ fabric.Bleed = fabric.util.createClass(fabric.Rect, {
     toObject: function() {
         return fabric.util.object.extend(this.callSuper('toObject'));
     }
-=======
-var bleed = new fabric.Rect({
-  left: 9,
-  top: 9, 
-  fill: 'transparent',    
-  width: cWidth - 19,
-  height: cHeight - 19,
-  stroke: 'rgba(208, 37, 37, 0.3)',
-  strokeWidth: 1,  
-  selectable: false
->>>>>>> Stashed changes
 });
 
 fabric.Bleed.fromObject = function(object, callback) {
