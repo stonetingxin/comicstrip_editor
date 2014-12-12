@@ -397,6 +397,7 @@ function blueInking(){
     canvas.renderAll();
     event_on_canvas = true;
     createJSON();
+}
 
 // LOCK LAYOUT
 function lockLayout() {
@@ -422,7 +423,7 @@ function lockLayout() {
         $('#lockIcon').removeClass('fa-unlock');
         $('#lockIcon').addClass('fa-lock');
     }
-};
+}
 
 // CHECK IF LAYOUT HAS PANELS IN IT
 function checkLayout() {
@@ -441,7 +442,7 @@ $('html').keyup(function(e){
         event_on_canvas = true;
         createJSON();
     }
-}) ;
+});
 
 // -----------------------------------------------------------------------------
 // ------------------------- DRAWING MODE --------------------------------------
@@ -478,7 +479,7 @@ function saveCanvasJSON(key){
 }
 
 function loadCanvasJSON(key){
-    savedJSON = simpleStorage.get(key)
+    savedJSON = simpleStorage.get(key);
     canvas.loadFromJSON(savedJSON);
 }
 
@@ -502,7 +503,6 @@ function flushStorage() {
     $('#list').html("");
 }
 
-<<<<<<< HEAD
 function saveSVG() {
     var svgFile = canvas.toSVG();
 
@@ -510,13 +510,11 @@ function saveSVG() {
     saveAs(blob, "comicbook.svg");
 }
 
-
-=======
 function removeStorage(key) {
     simpleStorage.deleteKey(key);
     $('#'+key).remove();
 }
->>>>>>> FETCH_HEAD
+
 // -----------------------------------------------------------------------------
 // -------------------- CANVAS EVENTS ------------------------------------------
 // -----------------------------------------------------------------------------
@@ -604,4 +602,3 @@ function redo() {
         renderJSON();
     }
 }
-
