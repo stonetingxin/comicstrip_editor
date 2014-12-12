@@ -50,6 +50,7 @@ fabric.Object.prototype.transparentCorners = false;
 fabric.Object.prototype.borderOpacityWhenMoving = 0.8;
 
 // BLEED AREA (what is this?)
+<<<<<<< Updated upstream
 fabric.Bleed = fabric.util.createClass(fabric.Rect, {
 
     type: 'Bleed',
@@ -70,6 +71,17 @@ fabric.Bleed = fabric.util.createClass(fabric.Rect, {
     toObject: function() {
         return fabric.util.object.extend(this.callSuper('toObject'));
     }
+=======
+var bleed = new fabric.Rect({
+  left: 9,
+  top: 9, 
+  fill: 'transparent',    
+  width: cWidth - 19,
+  height: cHeight - 19,
+  stroke: 'rgba(208, 37, 37, 0.3)',
+  strokeWidth: 1,  
+  selectable: false
+>>>>>>> Stashed changes
 });
 
 fabric.Bleed.fromObject = function(object, callback) {
@@ -268,21 +280,22 @@ function addShape(shapeName) {
 
 // ADD FABRIC OBJECT
 function addFobject(clicked_id) {
+    var coord = getRandomLeftTop();
     switch(clicked_id) {
     case "circle":
-            var circ = new fabric.Circle({ top: 140, left: 200, radius: 30, fill: '#212121' });
+            var circ = new fabric.Circle({ top: coord.top, left: coord.left, radius: 30, fill: '#212121' });
             canvas.add(circ);
             event_on_canvas = true;
             createJSON();
             break;
     case "rectangle":
-            var rect2 = new fabric.Rect({ top: 100, left: 100, width: 50, height: 50, fill: '#212121' }); 
+            var rect2 = new fabric.Rect({ top: coord.top, left: coord.left, width: 50, height: 50, fill: '#212121' }); 
             canvas.add(rect2);
             event_on_canvas = true;
             createJSON();
             break; 
     case "triangle":
-            var triang = new fabric.Triangle({ top: 200, left: 300, width: 70, height: 70, fill: '#212121' });
+            var triang = new fabric.Triangle({ top: coord.top, left: coord.left, width: 70, height: 70, fill: '#212121' });
             canvas.add(triang);
             event_on_canvas = true;
             createJSON();
@@ -495,6 +508,33 @@ function drawingMode(){
 };
 
 // -----------------------------------------------------------------------------
+// --------------------------- SAVE / PRINT CANVAS -----------------------------
+// -----------------------------------------------------------------------------
+
+var key = 0;
+
+function saveCanvasJSON(){
+    savedJSON = JSON.stringify(canvas);
+    simpleStorage.set(key, savedJSON);
+    alert("Canvas saved to JSON file in browser - jStorage");
+}
+
+function loadCanvasJSON(){
+    savedJSON = simpleStorage.get(key)
+    canvas.loadFromJSON(savedJSON);
+    alert('JSON file succesfully loaded' + savedJSON);
+}
+
+function printCanvas() {  
+    simpleStorage.set('key1', 'test');
+    value = simpleStorage.get('key1')  
+    alert("test"+value);
+    $('#printdiv').prepend('<img id="printCanvas" src="' + canvas.toDataURL('png') + '" />')
+    $.print("#printdiv");
+}
+
+
+// -----------------------------------------------------------------------------
 // --------------------------- EVENTS ------------------------------------------
 // -----------------------------------------------------------------------------
 
@@ -535,6 +575,36 @@ panel.on({'scaling': function(e) {
             });
          }
      });
+
+
+
+function saveCanvas(){
+  
+    var svg = canvas.toSVG();
+    var blob = new Blob([svg], {type: "data:image/svg+xml"});
+    saveAs(blob, "hello world.svg");
+    console.log(svg);
+
+
+   var url = "data:image/svg+xml;utf8," + encodeURIComponent(canvas.toSVG());
+
+   var link = document.createElement("a");
+   link.download = "filename";
+   link.href = url;
+   link.click();
+
+   open("data:image/svg+xml," + encodeURIComponent(canvas.toSVG()));
+
+};
+
+function saveCanvasPng(){
+    var canvas = document.getElementById("c"), ctx = canvas.getContext("2d");
+    canvas.toBlob(function(blob) {
+        saveAs(blob, "comicbook.png");
+    });
+    console.log('Save canvas to png file');
+
+};     
 */
 
 
