@@ -52,7 +52,11 @@ fabric.Object.prototype.cornerColor = '#b7e3ff';
 fabric.Object.prototype.transparentCorners = false;
 fabric.Object.prototype.borderOpacityWhenMoving = 0.8;
 
-// BLEED AREA (what is this?)
+// -----------------------------------------------------------------------------
+// ------------------------- OBJECTS CREATION ----------------------------------
+// -----------------------------------------------------------------------------
+
+// BLEED AREA 
 fabric.Bleed = fabric.util.createClass(fabric.Rect, {
 
     type: 'Bleed',
@@ -80,47 +84,10 @@ fabric.Bleed.fromObject = function(object, callback) {
 };
 
 fabric.Bleed.async = true;
-
 var bleed = new fabric.Bleed();
-
 canvas.add(bleed);
-
 var lockedLayout = false;
-
-createJSON();
-
-// -----------------------------------------------------------------------------
-// ------------------------- STARTING EXAMPLE FUNCTIONS ------------------------
-// -----------------------------------------------------------------------------
-
-// // rectangle
-// var rect = new fabric.Rect({
-//   left: 230,
-//   top: 240, 
-//   fill: '#2feb53',    
-//   width: 50,
-//   height: 50,  
-// });
-
-// // put test object and panel on canvas
-// // addPanel(50,50,140,140);
-// canvas.add(rect);
-
-// // rectangle
-// var rect_2 = new fabric.Rect({
-//   left: 330,
-//   top: 440, 
-//   fill: '#ff0053',    
-//   width: 100,
-//   height: 100,  
-// });
-
-// canvas.add(rect_2);
-
-
-// -----------------------------------------------------------------------------
-// ------------------------- OBJECTS CREATION ----------------------------------
-// -----------------------------------------------------------------------------
+createJSON();   // Add Bleed to canvas JSON
 
 //ADD PANEL FUNCTION
 function addPanel(x, y, w, h) {
@@ -327,7 +294,6 @@ function removeSelected() {
 
 
 // CLEAR CANVAS
-
 function cleanCanvas() {
     canvas.clear()
     canvas.add(bleed);
@@ -400,8 +366,6 @@ function blueInking(){
                     }
                 }    
           }
-            //console.log('added blueink for: ' + typeo);
-          
       }); 
     // If a single objct selected   
     } else {      
@@ -433,7 +397,6 @@ function blueInking(){
     canvas.renderAll();
     event_on_canvas = true;
     createJSON();
-}; // end of function
 
 // LOCK LAYOUT
 function lockLayout() {
@@ -512,19 +475,16 @@ function saveCanvasJSON(key){
     simpleStorage.set(key, savedJSON);
     $('#list').append('<div class="row" id="'+key+'"><div class="col-md-8">'+ key +'</div><div class="col-md-2"><button type="button" class="btn btn-primary" onclick="loadCanvasJSON(\''+key+'\')" data-dismiss="modal"><span class="glyphicon glyphicon-play"></span> Load </button></div><div class="col-md-2"><button type="button" class="btn btn-danger" onclick="removeStorage(\''+key+'\');"><span class="glyphicon glyphicon-delete"></span> Remove</button></div></div>');
     $('#set-name').val('');
-    // alert("Canvas saved to JSON file in browser - jStorage with key " + key);
 }
 
 function loadCanvasJSON(key){
     savedJSON = simpleStorage.get(key)
     canvas.loadFromJSON(savedJSON);
-    // alert('JSON file succesfully loaded' + savedJSON);
 }
 
 function printCanvas() {  
     simpleStorage.set('key1', 'test');
-    value = simpleStorage.get('key1')  
-    // alert("test"+value);
+    value = simpleStorage.get('key1');
     $('#printdiv').prepend('<img id="printCanvas" src="' + canvas.toDataURL('png') + '" />')
     $.print("#printdiv");
 }
@@ -547,7 +507,7 @@ function removeStorage(key) {
     $('#'+key).remove();
 }
 // -----------------------------------------------------------------------------
-// --------------------------- EVENTS ------------------------------------------
+// -------------------- CANVAS EVENTS ------------------------------------------
 // -----------------------------------------------------------------------------
 
 // CANVAS EVENT
@@ -571,57 +531,9 @@ canvas.on('mouse:up', function(e) {
     createJSON();
 });
 
-// PANEL SCALING KEEPS STROKEWIDTH THE SAME
-/*
-panel.on({'scaling': function(e) {
-        var obj = this,
-            w = obj.width * obj.scaleX,
-            h = obj.height * obj.scaleY,
-            s = obj.strokeWidth;
-
-             obj.set({
-            'height'     : h,
-            'width'      : w,
-            'scaleX'     : 1,
-            'scaleY'     : 1
-            });
-         }
-     });
-
-
-
-function saveCanvas(){
-  
-    var svg = canvas.toSVG();
-    var blob = new Blob([svg], {type: "data:image/svg+xml"});
-    saveAs(blob, "hello world.svg");
-    console.log(svg);
-
-
-   var url = "data:image/svg+xml;utf8," + encodeURIComponent(canvas.toSVG());
-
-   var link = document.createElement("a");
-   link.download = "filename";
-   link.href = url;
-   link.click();
-
-   open("data:image/svg+xml," + encodeURIComponent(canvas.toSVG()));
-
-};
-
-function saveCanvasPng(){
-    var canvas = document.getElementById("c"), ctx = canvas.getContext("2d");
-    canvas.toBlob(function(blob) {
-        saveAs(blob, "comicbook.png");
-    });
-    console.log('Save canvas to png file');
-
-};     
-*/
-
 
 // -----------------------------------------------------------------------------
-// --------------------------- JSON ------------------------------------------
+// ------------- JSON management for undo/redo ---------------------------------
 // -----------------------------------------------------------------------------
 
 function createJSON() {
@@ -640,23 +552,12 @@ function createJSON() {
 }
 
 function renderJSON() {
-    // console.log("trying to render JSON");
     var json = JSON_array[JSON_array.length - 1];
-    // console.log("JSON object:");
-    // console.log(json);
 
     canvas.loadFromJSON(json, function() {
 
       canvas.renderAll.bind(canvas);
-
-      // console.log("rendering " + canvas.getObjects().length + " items");
-
-      // for (var i = 0; i < canvas.getObjects().length; i++) {
-      //       console.log("logging item in JSON n " + i + ":");
-      //       console.log(canvas.item[i]);
-      // }
     },
-    // logging function -> to delete
     function (o, object) {
         if (object.panel) {
             object.on({'scaling': function(e) {
