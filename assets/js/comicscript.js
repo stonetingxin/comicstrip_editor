@@ -535,6 +535,14 @@ function flushStorage() {
     $('#list').html("");
 }
 
+function saveSVG() {
+    var svgFile = canvas.toSVG();
+
+    var blob = new Blob([svgFile], {type: "text/plain;charset=utf-8"});
+    saveAs(blob, "comicbook.svg");
+}
+
+
 // -----------------------------------------------------------------------------
 // --------------------------- EVENTS ------------------------------------------
 // -----------------------------------------------------------------------------

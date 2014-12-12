@@ -35,12 +35,15 @@
       <!--header start-->
       <header class="header black-bg">
 
-            <a href="index.html" class="logo"><i class="fa fa-trello" style="padding: 0px 10px"></i><b>COMIC STRIP EDITOR</b></a>
+            <a href="#" class="logo" style="margin: 16px 30px 0px 10px"> 
+              <i class="fa fa-trello" style="padding: 0px 5px 0px 10px"></i> 
+              <b>COMIC STRIP EDITOR</b>
+            </a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  Top menu start -->
                 <ul class="nav top-menu">
-                    <!-- History start -->
+                    <!-- History start
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                             <i class="fa fa-history"></i>
@@ -51,7 +54,7 @@
                             <li>
                                 <p class="green">History</p>
                             </li>
-                            <!-- ACTION -->
+                            
                             <li>
                                 <a href="#">
                                     <div class="task-info">
@@ -60,7 +63,7 @@
                                     
                                 </a>
                             </li>
-                            <!-- ACTION -->
+                            
                             <li>
                                 <a href="#">
                                     <div class="task-info">
@@ -68,8 +71,7 @@
                                     </div>
                                     
                                 </a>
-                            </li>
-                            <!-- ACTION -->
+                            
                             <li>
                                 <a href="#">
                                     <div class="task-info">
@@ -80,7 +82,7 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- History end -->
+                    History end -->
                     <!-- UNDO Button start -->  
                     <li class="dropdown">
                     <a id="btnUndo" href="#" onclick="undo()">
@@ -102,9 +104,7 @@
           
             <!--  top menu RIGHT start -->
           <div class="top-menu">
-            	<ul class="nav pull-right top-menu">
-                    
-                    
+            	<ul class="nav pull-right top-menu" >
                     <!-- Button start -->  
                     <li>
                     <a href="#" id="blueinking" style="margin: 15px 30px 0px 0px;" class="blueink" onclick="blueInking()">
@@ -154,7 +154,8 @@
                     </a>
                     </li>
                     <!-- Button end -->
-                    <li><a href="#" id="clear-canvas" style="margin: 15px 40px 0px 0px;" class="clearcanvas" data-toggle="modal" data-target="#confirm-delete">
+                    <li>
+                      <a href="#" id="clear-canvas" style="margin: 15px 40px 0px 0px;" class="clearcanvas" data-toggle="modal" data-target="#confirm-delete">
                         <i class="fa fa-refresh" style="margin-right: 10px"></i>Clean canvas</a>
                     </li>
                     <!-- Button start -->  
@@ -173,11 +174,19 @@
                     <!-- Button end -->
                     <!-- Button start -->  
                     <li class="dropdown">
+                    <a href="#" style="margin-top: 15px;" onclick="saveSVG()">
+                            <i class="fa fa-save"></i>
+                    </a>
+                    </li>
+                    <!-- Button end -->
+                    <!-- Button start -->  
+                    <li class="dropdown">
                     <a href="#" style="margin-top: 15px;" onclick="printCanvas()">
                             <i class="fa fa-print"></i>
                     </a>
                     </li>
                     <!-- Button end -->
+                    
             	</ul>
                 </div>
                 <!--  top menu RIGHT end -->
