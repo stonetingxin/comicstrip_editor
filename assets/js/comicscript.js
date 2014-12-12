@@ -22,6 +22,9 @@ var JSON_array = new Array();
 var redo_array = new Array();
 event_on_canvas = true;
 
+// onPageLoad show storage
+showStorage();
+
 canvas_1 = document.createElement("canvas");                        // CREATE CANVAS TAG
 canvas_1.id = "c";                                                  // SET CANVAS ID
 document.getElementById("canvasgoeshere").appendChild(canvas_1);    // Add canvas to container in HTML
@@ -499,12 +502,16 @@ function drawingMode(){
 // --------------------------- SAVE / PRINT CANVAS -----------------------------
 // -----------------------------------------------------------------------------
 
-// var key = 0;
+//prevent spaces in input form
+$("#set-name").on("keydown", function (e) {
+    return e.which !== 32;
+});
 
 function saveCanvasJSON(key){
     savedJSON = JSON.stringify(canvas);
     simpleStorage.set(key, savedJSON);
-    $('#list').append('<div class="row"><div class="col-md-8">'+ key +'</div><div class="col-md-2"><button type="button" class="btn btn-primary" onclick="loadCanvasJSON(\''+key+'\')" data-dismiss="modal"><span class="glyphicon glyphicon-play"></span> Load </button></div><div class="col-md-2"><button type="button" class="btn btn-danger" onclick="removeRow(this.parentNode)"><span class="glyphicon glyphicon-delete"></span> Remove</button></div></div>');
+    $('#list').append('<div class="row" id="'+key+'"><div class="col-md-8">'+ key +'</div><div class="col-md-2"><button type="button" class="btn btn-primary" onclick="loadCanvasJSON(\''+key+'\')" data-dismiss="modal"><span class="glyphicon glyphicon-play"></span> Load </button></div><div class="col-md-2"><button type="button" class="btn btn-danger" onclick="removeStorage(\''+key+'\');"><span class="glyphicon glyphicon-delete"></span> Remove</button></div></div>');
+    $('#set-name').val('');
     // alert("Canvas saved to JSON file in browser - jStorage with key " + key);
 }
 
@@ -526,7 +533,7 @@ function showStorage() {
     var list = simpleStorage.index();
     for (var i=0; i < list.length; i++) {
         console.log("list: " + list[i]);
-        // $('#list').append('<div class="row"><div class="col-md-8">'+ list[i] +'</div><div class="col-md-2"><button type="button" class="btn btn-primary" onclick="loadCanvasJSON(\''+list[i]+'\')" data-dismiss="modal"><span class="glyphicon glyphicon-play"></span> Load </button></div><div class="col-md-2"><button type="button" class="btn btn-danger" onclick="removeRow(this.parentNode)"><span class="glyphicon glyphicon-delete"></span> Remove</button></div></div>');
+        $('#list').append('<div class="row" id="'+list[i]+'"><div class="col-md-8">'+ list[i] +'</div><div class="col-md-2"><button type="button" class="btn btn-primary" onclick="loadCanvasJSON(\''+list[i]+'\')" data-dismiss="modal"><span class="glyphicon glyphicon-play"></span> Load </button></div><div class="col-md-2"><button type="button" class="btn btn-danger" onclick="removeStorage(\''+ list[i] +'\');"><span class="glyphicon glyphicon-delete"></span> Remove</button></div></div>');
     }
 }
 
@@ -535,6 +542,10 @@ function flushStorage() {
     $('#list').html("");
 }
 
+function removeStorage(key) {
+    simpleStorage.deleteKey(key);
+    $('#'+key).remove();
+}
 // -----------------------------------------------------------------------------
 // --------------------------- EVENTS ------------------------------------------
 // -----------------------------------------------------------------------------

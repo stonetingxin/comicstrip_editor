@@ -83,14 +83,14 @@
                     <!-- History end -->
                     <!-- UNDO Button start -->  
                     <li class="dropdown">
-                    <a id="btnUndo" href="#" onclick="undo()">
+                    <a id="btnUndo" href="#" onclick="undo()" title="Undo action">
                             <i class="fa fa-undo"></i>
                     </a>
                     </li>
                     <!-- Button end -->
                     <!-- REDO Button start -->  
                     <li>
-                    <a id="btnRedo" href="#" onclick="redo()">
+                    <a id="btnRedo" href="#" onclick="redo()" title="Redo action">
                             <i class="fa fa-rotate-right"></i>
                     </a>
                     </li>
@@ -107,73 +107,73 @@
                     
                     <!-- Button start -->  
                     <li>
-                    <a href="#" id="blueinking" style="margin: 15px 30px 0px 0px;" class="blueink" onclick="blueInking()">
+                    <a href="#" id="blueinking" style="margin: 15px 30px 0px 0px;" class="blueink" onclick="blueInking()" title="Blue Ink">
                             <i class="fa fa-magic" style="margin-right: 10px"></i> Blue inking
                     </a>
                     </li>
                     <!-- Button end -->
                     <!-- Button start -->  
                     <li>
-                    <a href="#" id="sendback" style="margin-top: 15px; padding: 2px 9px;" onclick="layerManagement(this.id)">
+                    <a href="#" id="sendback" style="margin-top: 15px; padding: 2px 9px;" onclick="layerManagement(this.id)" title="Put to bottom layer">
                             <i class="fa fa-step-forward fa-rotate-90"></i>
                     </a>
                     </li>
                     <!-- Button end -->
                     <!-- Button start -->  
                     <li>
-                    <a href="#" id="bringfront" style="margin-top: 15px; padding: 2px 9px;" onclick="layerManagement(this.id)">
+                    <a href="#" id="bringfront" style="margin-top: 15px; padding: 2px 9px;" onclick="layerManagement(this.id)" title="Put to top layer">
                             <i class="fa fa-step-forward fa-rotate-270"></i>
                     </a>
                     </li>
                     <!-- Button end -->
                     <!-- Button start -->  
                     <li>
-                    <a href="#" id="backward" style="margin-top: 15px;" onclick="layerManagement(this.id)">
+                    <a href="#" id="backward" style="margin-top: 15px;" onclick="layerManagement(this.id)" title="Increase layer">
                             <i class="fa fa-chevron-down"></i>
                     </a>
                     </li>
                     <!-- Button end -->
                     <!-- Button start -->  
                     <li class="pushleft">
-                    <a href="#" id="forward" style="margin: 15px 30px 0px 0px;" onclick="layerManagement(this.id)">
+                    <a href="#" id="forward" style="margin: 15px 30px 0px 0px;" onclick="layerManagement(this.id)" title="Decrease layer">
                             <i class="fa fa-chevron-up"></i>
                     </a>
                     </li>
                     <!-- Button end -->
                     <!-- DELETE Button start -->  
                     <li class="margright">
-                    <a href="#" id="deleteselected" style="margin: 15px 60px 0px 0px;" onclick="removeSelected()">
+                    <a href="#" id="deleteselected" style="margin: 15px 60px 0px 0px;" onclick="removeSelected()" title="Remove item">
                             <i class="fa fa-trash"></i>
                     </a>
                     </li>
                     <!-- DELETE Button end -->
                     <!-- Button start -->  
                     <li>
-                    <a href="#" id="lockLayout" style="margin: 15px 15px 0px 0px;" class="locklayout" onclick="lockLayout()">
+                    <a href="#" id="lockLayout" style="margin: 15px 15px 0px 0px;" class="locklayout" onclick="lockLayout()" title="Lock grid layout">
                             <i id="lockIcon" class="fa fa-lock" style="margin-right: 10px"></i> <span id="lockMessage">Lock</span> layout 
                     </a>
                     </li>
                     <!-- Button end -->
-                    <li><a href="#" id="clear-canvas" style="margin: 15px 40px 0px 0px;" class="clearcanvas" data-toggle="modal" data-target="#confirm-delete">
+                    <li><a href="#" id="clear-canvas" style="margin: 15px 40px 0px 0px;" class="clearcanvas" data-toggle="modal" data-target="#confirm-delete" title="Clear all canvas">
                         <i class="fa fa-refresh" style="margin-right: 10px"></i>Clean canvas</a>
                     </li>
                     <!-- Button start -->  
                     <li class="dropdown">
-                    <a href="#" style="margin-top: 15px;" data-toggle="modal" data-target="#save-canvas">
+                    <a href="#" style="margin-top: 15px;" data-toggle="modal" data-target="#save-canvas" title="Save page">
                             <i class="fa fa-download"></i>
                     </a>
                     </li>
                     <!-- Button end -->
                     <!-- Button start -->  
                     <li class="dropdown">
-                    <a href="#" style="margin-top: 15px;" data-toggle="modal" data-target="#load-canvas" onclick="showStorage()">
+                    <a href="#" style="margin-top: 15px;" data-toggle="modal" data-target="#load-canvas" title="Load page">
                             <i class="fa fa-upload"></i>
                     </a>
                     </li>
                     <!-- Button end -->
                     <!-- Button start -->  
                     <li class="dropdown">
-                    <a href="#" style="margin-top: 15px;" onclick="printCanvas()">
+                    <a href="#" style="margin-top: 15px;" onclick="printCanvas()" title="Print page">
                             <i class="fa fa-print"></i>
                     </a>
                     </li>
