@@ -389,7 +389,6 @@ function blueInking(){
                     }
                     else{
                         temp.setFill(blueInkColor); 
-                        temp.set({ stroke: blueInkColor});
                     }
                 }
         }           
