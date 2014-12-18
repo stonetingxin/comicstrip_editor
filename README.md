@@ -1,7 +1,7 @@
 #Comicstrip Editor
-Simple comic book sketching application built in JS.
+Simple comic book sketching application built in JS. Built on **Fabric.js** library.
 
-
+![image](screenshot.png)
 
 ##Functionalities
 ######Drawing
